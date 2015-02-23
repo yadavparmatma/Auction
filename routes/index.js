@@ -11,8 +11,6 @@ var loadUserFromSession = function(req,res,next){
 	req.session.user_name && auction.getSingleUser(req.session.user_name, function(err, user){
 		if(user){
 			var userInfo = {
-				// id: user.id,
-				// name: user.name,
 				user_name: user.user_name
 			};
 			req.user = userInfo;
@@ -30,9 +28,7 @@ var requireLogin = function(req,res,next){
 
 router.use(loadUserFromSession);
 
-/* GET home page. */
 router.get('/', function(req, res) {
-  // res.render('index', { title: 'Auction' });
 	auction.getTopicsNameAndDate(function(err, topics){
   		res.render('index', {
   		  topics: topics
