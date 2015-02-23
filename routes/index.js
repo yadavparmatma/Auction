@@ -39,5 +39,9 @@ router.post('/adminLogin',function(req,res){
 	res.render('adminDashboard');
 });
 
+router.get('/addItems',function(req,res){
+	res.render('addItems');
+});
+
 
 module.exports = router;

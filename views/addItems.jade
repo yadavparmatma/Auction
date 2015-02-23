@@ -3,3 +3,39 @@ block vars
  - var title = "addItems"
 
 block content
+ center
+  br
+  h1 Add-Items
+  form(action="/addItems" method="POST")
+   table(cellpadding=5)
+    tr
+     td
+      b Item-Name:
+     td 
+      input(type="text" name="name" required)
+    tr
+     td
+      b Base-Price: 
+     td
+      input(type="text" name="name" required)
+    tr
+     td
+      b Date&Time: 
+     td
+      input(type="text" name="name" required) 
+      |  YY-MM-DD  HH:MM
+    tr
+    tr
+     td
+      b Status: 
+     td
+      input(type="text" name="name" required)
+    tr
+     td
+      b Description: 
+     td
+      input(type="textarea" id ="desc" name="name" required)
+    tr
+   br
+   br
+   input(type="submit" value="Add")
