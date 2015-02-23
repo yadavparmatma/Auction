@@ -17,7 +17,8 @@ describe('auction', function() {
 				assert.deepEqual(itemName, [{
 					id: 1,
 					name: 'bat',
-					date: '2015-02-23'
+					date: '2015-02-23',
+					status: 'open'
 				}])
 				done();
 			});

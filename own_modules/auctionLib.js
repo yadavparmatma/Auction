@@ -3,7 +3,7 @@ var _ = require("lodash");
 
 
 var _getTopicsNameAndDate = function(db,onComplete) {
-	var get_topics_query = 'select id,name,date from items;';
+	var get_topics_query = 'select id,name,date,status from items;';
 	db.all(get_topics_query,onComplete);
 }
 
