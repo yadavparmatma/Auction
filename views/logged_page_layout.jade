@@ -1,0 +1,14 @@
+block vars
+doctype html
+html
+  head
+    title Auction #{title}
+    link(rel='stylesheet', href="/stylesheets/style.css")
+    h1(style = "text-align: center;") Online-Auction
+    div(class="topbar" align='right') Prashant
+      |&nbsp;... 
+      a(href='/logout') Logout
+      hr
+    block scripts
+  body
+    block content

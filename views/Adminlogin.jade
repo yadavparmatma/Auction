@@ -1,0 +1,26 @@
+extends layout
+block vars
+ //- - var title = "Admin-Login"
+
+block content
+ a(href="/") Home 
+  center
+   h1 Online-Auction
+ hr
+ center
+  br
+  h2 Login to your account
+  if error
+   p ERROR: #{error}
+  form(action="/adminLogin" method="POST")
+   span 
+    |Email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    input(type="email" name="email_id" required)
+   br
+   br
+   span 
+    |Password:
+    input(type="password" name="password" required)
+   br
+   br
+   input(type="submit" value="Login")
