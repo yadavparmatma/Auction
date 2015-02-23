@@ -27,8 +27,13 @@ var requireLogin = function(req,res,next){
 };
 
 /* GET home page. */
-router.get('/', function(req, res) {
-  res.render('index', { title: 'Express' });
+// router.get('/', function(req, res) {
+//   res.render('index', { title: 'Express' });
+// });
+
+
+router.get('/adminDashboard', function(req, res) {
+  res.render('adminDashboard');
 });
 
 router.get('/Adminlogin',function(req,res){
