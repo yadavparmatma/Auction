@@ -14,4 +14,5 @@ router.get('/adminDashboard', function(req, res) {
   res.render('adminDashboard');
 });
 
+
 module.exports = router;
