@@ -1,5 +1,6 @@
 var auction = require("../own_modules/auctionLib.js").init("data/auction.db");
 var bcrypt = require("bcryptjs");
+var _ = require('lodash');
 
 var express = require('express');
 var router = express.Router();
@@ -24,14 +25,19 @@ var loadUserFromSession = function(req,res,next){
 };
 
 var requireLogin = function(req,res,next){
-	req.session.user_name? next(): res.redirect('/login');
+	req.session.user_name? next(): res.redirect('/adminLogin');
 };
 
 router.use(loadUserFromSession);
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'Auction' });
+  // res.render('index', { title: 'Auction' });
+	auction.getTopicsNameAndDate(function(err, topics){
+  		res.render('index', {
+  		  topics: topics
+  		}); 
+  	});
 });
 
 router.get('/adminLogin',function(req,res){
@@ -40,6 +46,11 @@ router.get('/adminLogin',function(req,res){
 
 router.get('/adminDashboard',requireLogin,function(req,res){
 	res.render('adminDashboard');
+});
+
+router.get('/adminLogout',function(req,res){
+	req.session.destroy();
+	res.redirect('/adminLogin');
 });
 
 router.post('/adminLogin',function(req,res){
@@ -56,5 +67,10 @@ router.post('/adminLogin',function(req,res){
 
 	auction.getPassword(userInfo.user_name,callback);
 });
+
+router.get('/addItems',function(req,res){
+	res.render('addItems');
+});
+
 
 module.exports = router;

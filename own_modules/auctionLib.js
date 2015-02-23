@@ -1,4 +1,11 @@
 var sqlite3 = require("sqlite3").verbose();
+var _ = require("lodash");
+
+
+var _getTopicsNameAndDate = function(db,onComplete) {
+	var get_topics_query = 'select id,name,date from items;';
+	db.all(get_topics_query,onComplete);
+}
 
 var insertQueryMaker = function (tableName, data, fields) {
 	var columns = fields && ' (' + fields.join(', ') + ')' || '';
@@ -35,14 +42,14 @@ var retrieveWhereToGet = function (resource) {
 	return ' where ' + whereToGet;
 };
 
-var _getSingleUser = function(email_id,db,onComplete){
+var _getSingleUser = function(user_name,db,onComplete){
 	var whereToGet = {user_name: user_name};
 	select(db, onComplete, 'admin', 'get', null, whereToGet);
 };
 
 var _getPassword = function (user_name, db, onComplete) {
 	var whereToGet = {user_name: user_name};
-	select(db, onComplete, 'admin', 'get', ['password'], whereToGet);
+	select(db, onComplete, 'admin', 'get', ['user_name','password'], whereToGet);
 };
 
 var init = function(location){	
@@ -63,7 +70,9 @@ var init = function(location){
 	};
 
 	var records = {
-		getPassword:operate(_getPassword)
+		getPassword:operate(_getPassword),
+		getSingleUser:operate(_getSingleUser),
+		getTopicsNameAndDate : operate(_getTopicsNameAndDate)
 	};
 	return records;
 };
