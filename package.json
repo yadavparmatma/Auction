@@ -24,7 +24,7 @@
     "squel": "^3.10.0"
   },
   "devDependencies": {
-    "chai": "1.10.0"
+    "chai": "1.10.0",
     "debug": "~2.0.0",
     "jade": "~1.6.0"    
     }
