@@ -26,6 +26,8 @@ var requireLogin = function(req,res,next){
 	req.session.userEmail? next(): res.redirect('/login');
 };
 
+router.use(loadUserFromSession);
+
 /* GET home page. */
 router.get('/', function(req, res) {
   res.render('index', { title: 'Express' });
@@ -36,7 +38,14 @@ router.get('/adminLogin',function(req,res){
 });
 
 router.post('/adminLogin',function(req,res){
-	res.render('adminDashboard');
+	if(req.body.email_id=='pk@gmail.com' && req.body.password==1234)
+		res.render('adminDashboard');
+	res.render('adminLogin');
 });
+
+router.get('/addItems',function(req,res){
+	res.render('addItems');
+});
+
 
 module.exports = router;

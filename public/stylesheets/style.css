@@ -6,3 +6,7 @@ body {
 a {
   color: #00B7FF;
 }
+#desc {
+	height: 80px;
+	width: 150px;
+}
