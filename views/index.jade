@@ -1,5 +1,24 @@
 extends layout
-
+//- block vars
+ //- - var title = "Adda-Home"
+ //- - var topis = topics
 block content
-  h1= title
-  p Welcome to #{title}
+ div
+  center
+   h1 Online-Auction
+   <hr></hr>
+   p For Auction Master(Admin) 
+    a(href="/Adminlogin") Login
+   //- p Or if new user 
+   //-  a(href="/registration") Register
+  br
+  <hr></hr>
+  h2 AUCTIONS LIST
+ if topis
+  div
+   ol
+    each topic in topics
+     li 
+      h2 #{topic.name}
+      | #{topic.description}
+  
