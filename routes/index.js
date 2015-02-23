@@ -1,3 +1,6 @@
+var auction = require("../own_modules/auctionLib.js").init("data/auction.db");
+
+
 var express = require('express');
 var router = express.Router();
 
