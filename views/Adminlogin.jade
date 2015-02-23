@@ -1,5 +1,7 @@
 extends layout
-block vars
+//- block vars
+ //- - var title = "Admin-Login"
+
 
 block content
  a(href="/") Home 
@@ -14,7 +16,7 @@ block content
   form(action="/adminLogin" method="POST")
    span 
     |Email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    input(type="email" name="email_id" required)
+    input(type="text" name="user_name" required)
    br
    br
    span 

@@ -7,12 +7,67 @@ var _getTopicsNameAndDate = function(db,onComplete) {
 	db.all(get_topics_query,onComplete);
 }
 
+
 var _getItemsAllDetail = function(itemId,db,onComplete){
 	var query = "select * from items where id="+itemId;
 	db.get(query,function(err,allDetails){
 		err || onComplete(null,allDetails);
 	});
 }
+
+var insertQueryMaker = function (tableName, data, fields) {
+	var columns = fields && ' (' + fields.join(', ') + ')' || '';
+	var values = '"' + data.join('", "') + '"';
+	var query = 'insert into ' + tableName + columns + ' values(' + values + ');';
+	return query;
+};
+
+var selectQueryMaker = function (tableName, retrivalData, where) {
+	retrivalData = retrivalData || ['*'];
+	var whatToGet = retrivalData.join(', ');
+	var whereToGet = where && retrieveWhereToGet(where) || '';
+
+	var query = 'select ' + whatToGet + ' from ' + tableName + whereToGet + ';';
+	return query;
+};
+
+var insertInto = function (db, fields, data, tableName, onComplete) {
+	var query = insertQueryMaker(tableName, data, fields);
+	db.run(query, onComplete);
+};
+
+
+var select = function (db, onComplete, tableName, retriveMethod, retrivalData, where) {
+	var query = selectQueryMaker(tableName, retrivalData, where);
+	db[retriveMethod](query, onComplete);
+};
+
+var retrieveWhereToGet = function (resource) {
+	var whereToGet = Object.keys(resource).map(function (key) {
+		return key + ' = "' + resource[key] + '"';
+	}).join(' and ');
+
+	return ' where ' + whereToGet;
+};
+
+var _getSingleUser = function(user_name,db,onComplete){
+	var whereToGet = {user_name: user_name};
+	select(db, onComplete, 'admin', 'get', null, whereToGet);
+};
+
+var _getPassword = function (user_name, db, onComplete) {
+	var whereToGet = {user_name: user_name};
+	select(db, onComplete, 'admin', 'get', ['user_name','password'], whereToGet);
+};
+
+var _insertItem = function(newItem,db,onComplete){
+	var insertQry = "insert into items (name,description,date,base_price,status)values('"+newItem.name+"','"+
+		newItem.desc+"','"+newItem.date+"',"+newItem.basePrice+",'"+newItem.status+"');";
+	db.run(insertQry,onComplete);
+
+}
+
+
 var init = function(location){	
 	var operate = function(operation){
 		return function(){
@@ -32,9 +87,24 @@ var init = function(location){
 
 	var records = {
 		getTopicsNameAndDate : operate(_getTopicsNameAndDate),
-		getItemsAllDetail : operate(_getItemsAllDetail)
+		getItemsAllDetail : operate(_getItemsAllDetail),
+		insertItem : operate(_insertItem),
+		getPassword:operate(_getPassword),
+		getSingleUser:operate(_getSingleUser),
+		getTopicsNameAndDate : operate(_getTopicsNameAndDate)
 	};
 	return records;
 };
 
 exports.init = init;
+
+exports.queryParser = {
+	selectQueryMaker: selectQueryMaker,
+	insertQueryMaker: insertQueryMaker
+};
+
+
+exports.queryHandler = {
+	select: select,
+	insertInto: insertInto
+};

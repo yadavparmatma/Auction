@@ -16,13 +16,9 @@ block content
         th ItemList
         th Date
       tr
-  each topic in topics
-    table(cellpadding=5 )
-      tr
-       td 
-       a(href='/itemDescription/#{topic.id}') #{topic.name}
-       td  &nbsp;&nbsp;&nbsp #{topic.date}
-      tr
-      
-
-
+      each topic in topics
+        table(cellpadding=5 )
+          tr
+           td 
+           a(href='/itemDescription/#{topic.id}') #{topic.name}
+           td  &nbsp;&nbsp;&nbsp; #{topic.date}
