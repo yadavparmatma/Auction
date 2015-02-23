@@ -1,5 +1,5 @@
-var auction = require("../own_modules/auctionLib.js").init("data/auction.db");
-
+var auction = require("../own_modules/auctionLib.js").init("./data/auction.db");
+var _ = require('lodash');
 
 var express = require('express');
 var router = express.Router();
@@ -30,7 +30,11 @@ router.use(loadUserFromSession);
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'Express' });
+	auction.getTopicsNameAndDate(function(err, topics){
+  		res.render('index', {
+  		  topics: topics
+  		}); 
+  	});
 });
 
 router.get('/adminLogin',function(req,res){
