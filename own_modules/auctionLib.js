@@ -1,4 +1,56 @@
 var sqlite3 = require("sqlite3").verbose();
+var _ = require("lodash");
+
+
+var _getTopicsNameAndDate = function(db,onComplete) {
+	var get_topics_query = 'select id,name,date from items;';
+	db.all(get_topics_query,onComplete);
+}
+
+var insertQueryMaker = function (tableName, data, fields) {
+	var columns = fields && ' (' + fields.join(', ') + ')' || '';
+	var values = '"' + data.join('", "') + '"';
+	var query = 'insert into ' + tableName + columns + ' values(' + values + ');';
+	return query;
+};
+
+var selectQueryMaker = function (tableName, retrivalData, where) {
+	retrivalData = retrivalData || ['*'];
+	var whatToGet = retrivalData.join(', ');
+	var whereToGet = where && retrieveWhereToGet(where) || '';
+
+	var query = 'select ' + whatToGet + ' from ' + tableName + whereToGet + ';';
+	return query;
+};
+
+var insertInto = function (db, fields, data, tableName, onComplete) {
+	var query = insertQueryMaker(tableName, data, fields);
+	db.run(query, onComplete);
+};
+
+
+var select = function (db, onComplete, tableName, retriveMethod, retrivalData, where) {
+	var query = selectQueryMaker(tableName, retrivalData, where);
+	db[retriveMethod](query, onComplete);
+};
+
+var retrieveWhereToGet = function (resource) {
+	var whereToGet = Object.keys(resource).map(function (key) {
+		return key + ' = "' + resource[key] + '"';
+	}).join(' and ');
+
+	return ' where ' + whereToGet;
+};
+
+var _getSingleUser = function(user_name,db,onComplete){
+	var whereToGet = {user_name: user_name};
+	select(db, onComplete, 'admin', 'get', null, whereToGet);
+};
+
+var _getPassword = function (user_name, db, onComplete) {
+	var whereToGet = {user_name: user_name};
+	select(db, onComplete, 'admin', 'get', ['user_name','password'], whereToGet);
+};
 
 var _insertItem = function(newItem,db,onComplete){
 	var insertQry = "insert into items (name,description,date,base_price,status)values('"+newItem.name+"','"+
@@ -26,9 +78,23 @@ var init = function(location){
 	};
 
 	var records = {
-		insertItem : operate(_insertItem)
+		insertItem : operate(_insertItem),
+		getPassword:operate(_getPassword),
+		getSingleUser:operate(_getSingleUser),
+		getTopicsNameAndDate : operate(_getTopicsNameAndDate)
 	};
 	return records;
 };
 
 exports.init = init;
+
+exports.queryParser = {
+	selectQueryMaker: selectQueryMaker,
+	insertQueryMaker: insertQueryMaker
+};
+
+
+exports.queryHandler = {
+	select: select,
+	insertInto: insertInto
+};
