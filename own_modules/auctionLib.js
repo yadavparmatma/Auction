@@ -7,6 +7,12 @@ var _getTopicsNameAndDate = function(db,onComplete) {
 	db.all(get_topics_query,onComplete);
 }
 
+var _getItemsAllDetail = function(itemId,db,onComplete){
+	var query = "select * from items where id="+itemId;
+	db.get(query,function(err,allDetails){
+		err || onComplete(null,allDetails);
+	});
+}
 var init = function(location){	
 	var operate = function(operation){
 		return function(){
@@ -25,7 +31,8 @@ var init = function(location){
 	};
 
 	var records = {
-		getTopicsNameAndDate : operate(_getTopicsNameAndDate)
+		getTopicsNameAndDate : operate(_getTopicsNameAndDate),
+		getItemsAllDetail : operate(_getItemsAllDetail)
 	};
 	return records;
 };

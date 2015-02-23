@@ -47,6 +47,14 @@ router.post('/adminLogin',function(req,res){
 	res.render('adminLogin');
 });
 
+router.get('/itemDescription/:id', function(req, res) {
+	auction.getItemsAllDetail(req.params.id,function(err, allDetail){
+  		res.render('itemDescription', {
+  		  allDetail: allDetail
+  		}); 
+  	});
+});
+
 router.get('/addItems',function(req,res){
 	res.render('addItems');
 });
