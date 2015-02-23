@@ -1,5 +1,13 @@
 var sqlite3 = require("sqlite3").verbose();
 
+var _insertItem = function(newItem,db,onComplete){
+	var insertQry = "insert into items (name,description,date,base_price,status)values('"+newItem.name+"','"+
+		newItem.desc+"','"+newItem.date+"',"+newItem.basePrice+",'"+newItem.status+"');";
+	db.run(insertQry,onComplete);
+
+}
+
+
 var init = function(location){	
 	var operate = function(operation){
 		return function(){
@@ -18,6 +26,7 @@ var init = function(location){
 	};
 
 	var records = {
+		insertItem : operate(_insertItem)
 	};
 	return records;
 };

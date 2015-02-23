@@ -44,7 +44,16 @@ router.post('/adminLogin',function(req,res){
 });
 
 router.get('/addItems',function(req,res){
-	res.render('addItems');
+	res.render("addItems");
+});
+
+router.post("/addItems",function(req,res){
+	var newItem  = req.body;
+	auction.insertItem(newItem,function(err){
+		if(!err){
+			res.redirect("/adminDashboard");
+		}
+	});
 });
 
 
