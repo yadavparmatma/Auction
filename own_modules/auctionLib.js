@@ -3,8 +3,16 @@ var _ = require("lodash");
 
 
 var _getTopicsNameAndDate = function(db,onComplete) {
-	var get_topics_query = 'select id,name,date from items;';
+	var get_topics_query = 'select id,name,date,status from items;';
 	db.all(get_topics_query,onComplete);
+}
+
+
+var _getItemsAllDetail = function(itemId,db,onComplete){
+	var query = "select * from items where id="+itemId;
+	db.get(query,function(err,allDetails){
+		err || onComplete(null,allDetails);
+	});
 }
 
 var insertQueryMaker = function (tableName, data, fields) {
@@ -78,6 +86,8 @@ var init = function(location){
 	};
 
 	var records = {
+		getTopicsNameAndDate : operate(_getTopicsNameAndDate),
+		getItemsAllDetail : operate(_getItemsAllDetail),
 		insertItem : operate(_insertItem),
 		getPassword:operate(_getPassword),
 		getSingleUser:operate(_getSingleUser),

@@ -28,7 +28,6 @@ var requireLogin = function(req,res,next){
 
 router.use(loadUserFromSession);
 
-/* GET home page. */
 router.get('/', function(req, res) {
 	auction.getTopicsNameAndDate(function(err, topics){
   		res.render('index', {
@@ -63,6 +62,14 @@ router.post('/adminLogin',function(req,res){
 	};
 
 	auction.getPassword(userInfo.user_name,callback);
+});
+
+router.get('/itemDescription/:id', function(req, res) {
+	auction.getItemsAllDetail(req.params.id,function(err, allDetail){
+  		res.render('itemDescription', {
+  		  allDetail: allDetail
+  		}); 
+  	});
 });
 
 router.get('/addItems',function(req,res){

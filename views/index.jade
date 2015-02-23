@@ -11,15 +11,15 @@ block content
   br
   <hr></hr>
   h2 AUCTIONS LIST
-  each topic in topics
-    table(cellpadding=5)
-    tr
-     td
-     a(href='/itemDescription/#{topic.id}') #{topic.name}
-     td 
-      b &nbsp;&nbsp;&nbsp; #{topic.date}
-    tr
-      
-
-
-      
+  table(cellpadding=5 border='1')
+      tr
+        th ItemName
+        th Date
+        th Status
+      tr
+      each topic in topics
+        tr
+          td 
+           a(href='/itemDescription/#{topic.id}') #{topic.name}
+          td #{topic.date}
+          td #{topic.status}
