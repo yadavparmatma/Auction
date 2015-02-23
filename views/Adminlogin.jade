@@ -5,8 +5,8 @@ extends layout
 
 block content
  a(href="/") Home 
-  center
-   h1 Online-Auction
+ center
+  h1 Online-Auction
  hr
  center
   br
@@ -15,12 +15,12 @@ block content
    p ERROR: #{error}
   form(action="/adminLogin" method="POST")
    span 
-    |Email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    |UserName:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     input(type="text" name="user_name" required)
    br
    br
    span 
-    |Password:
+    |Password:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     input(type="password" name="password" required)
    br
    br
