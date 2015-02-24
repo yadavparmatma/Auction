@@ -9,24 +9,25 @@ html
 
     div(class="topbar" align='right')  #{userName}
       |&nbsp;... 
-      a(href='/home') Logout
+      a(href='/userLogin') Logout
       hr
     block scripts
  div
   | List of Auctions you joined
-  ul
-  table(cellpadding = 2 border= 1)
-   tr
-     th ItemID
-     th ItemName
-     th ItemDescription
-     th Last_Date
-     th Base Price
-     th Status
-     th Start time
-   each item in itemsDetails
-    tr 
-    each val,key in item
-      if(val)
-       td
-        a(href='/auction/#{item.id}') #{val}
+  if itemsDetails!=undefined
+   ul
+   table(cellpadding = 2 border= 1)
+    tr
+      th ItemID
+      th ItemName
+      th ItemDescription
+      th Last_Date
+      th Base Price
+      th Status
+      th Start time
+    each item in itemsDetails
+     tr 
+     each val,key in item
+       if(val)
+        td
+         a(href='/auction/#{item.id}') #{val}

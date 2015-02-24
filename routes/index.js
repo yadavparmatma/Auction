@@ -52,9 +52,7 @@ router.get('/userLogout',function(req,res){
 	req.session.destroy();
 	res.redirect('/userLogin');
 });
-router.get("userDashboard",function(req,res){
-	res.render("userDashboard/:"+req.session.id);
-})
+
 router.post('/userLogin',function(req,res){
 	var userInfo = req.body;
 	var callback = function(error,data){
@@ -141,26 +139,6 @@ router.get("/registerAuction/:itemId",function(req,res){
 	res.render("registerAuction");
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 router.post("/addToAuction/:itemId",function(req,res){
 	var detail = req.body;
 	auction.getUserPassword(detail.email,function(err,status){
@@ -176,57 +154,11 @@ router.post("/addToAuction/:itemId",function(req,res){
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 router.get('/userDashboard',requireLoginForUser,function(req,res){
-	// var id = req.session.user_id;
-	var id =2;
 	var items = {};
+	var id = req.session.user_id;
+	items.userName = req.session.name;
 	auction.getJoinedAuctions(id,function(err,joinedAuctionsDetails){
-		items.userName = "parmatma";
 		items.itemsDetails = joinedAuctionsDetails;
 		res.render('userDashboard',items);
 	})	
