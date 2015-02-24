@@ -88,9 +88,10 @@ var compareTime = function(oldDate){
 var _getUpcomingAuction = function(db,onComplete){
 	db.all('select * from items',function(err,itemsList){
 		var newItemList = itemsList.filter(function(itemList){
-			compareTime(itemList.date)
+			if(compareTime(itemList.date))
 				return itemList;
 		})
+		// console.log(new)
 		onComplete(null,newItemList);
 	})
 }
