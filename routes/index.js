@@ -78,6 +78,7 @@ router.get('/addItems',function(req,res){
 
 router.post("/addItems",function(req,res){
 	var newItem  = req.body;
+	newItem.start_Time = new Date().toString().split('GMT')[0];
 	auction.insertItem(newItem,function(err){
 		if(!err){
 			res.redirect("/adminDashboard");
