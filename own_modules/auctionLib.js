@@ -69,7 +69,17 @@ var _insertItem = function(newItem,db,onComplete){
 	var insertQry = "insert into items (name,description,date,base_price,status,start_Time)values('"+newItem.name+"','"+
 		newItem.desc+"','"+newItem.date+"','"+newItem.basePrice+"','"+newItem.status+"','"+newItem.start_Time+"');";
 	db.run(insertQry,onComplete);
+}
 
+var _getJoinedAuctions = function(id,db,onComplete){
+	var selectJoinedItem = "select items_id from users where id = "+ id;
+
+	db.get(selectJoinedItem,function(err,joinedAuctions){
+		var getTtemsDetails = "select * from items where id ="+JSON.parse(joinedAuctions.items_id).join(' or ')+";";
+		db.all(getTtemsDetails,function(er,itemDetails){
+			onComplete(null,itemDetails);
+		}) 
+	});
 }
 
 var _insertUsers = function (userData, db, onComplete) {
@@ -118,6 +128,8 @@ var init = function(location){
 		insertItem : operate(_insertItem),
 		getPassword:operate(_getPassword),
 		getSingleUser:operate(_getSingleUser),
+		getTopicsNameAndDate : operate(_getTopicsNameAndDate),
+		getJoinedAuctions: operate(_getJoinedAuctions),
 		insertUsers:operate(_insertUsers),
 		getUserPassword:operate(_getUserPassword),
 		getUpcomingAuction : operate(_getUpcomingAuction)
@@ -137,3 +149,4 @@ exports.queryHandler = {
 	select: select,
 	insertInto: insertInto
 };
+
