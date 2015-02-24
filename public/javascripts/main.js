@@ -10,7 +10,7 @@ var onPageLoad  = function(){
 		var itemId = getItemId();
 		var email= $("#email").val();
 		var password = $("#password").val();
-		$.ajax({url:"/addToAuction/:"+itemId,type:"POST", dataType: "json",data:{email:email,password:password}});
+		$.ajax({url:"/addToAuction/:"+itemId,type:"POST", dataType: "json",data:{email:email,password:password,itemId:itemId}});
 	});
 };
 

@@ -1,5 +1,6 @@
 var sqlite3 = require("sqlite3").verbose();
 var _ = require("lodash");
+var squel = require("squel");
 
 
 var _getTopicsNameAndDate = function(db,onComplete) {
@@ -80,6 +81,25 @@ var _insertUsers = function (userData, db, onComplete) {
 	insertInto(db, fields, data, 'users', onComplete);
 };
 
+
+var get_update_users_query = function(detail,parsedArray){
+	return (squel.update().table("users")
+			.set("items_id",JSON.stringify(parsedArray))
+			.where("email_id= ?",detail.email)).toString();
+};
+
+var _addAuctionId = function(detail,db,onComplete){
+	var selectQry = "select items_id from users where email_id='"+detail.email+"';";
+	db.get(selectQry,function(err,data){
+		var parsedArray = JSON.parse(data['items_id']);
+		parsedArray.push(detail.itemId);
+		var updateQry = get_update_users_query(detail,parsedArray);
+		db.run(updateQry,function(err){
+			onComplete(err);
+		});
+	});
+};
+
 var init = function(location){	
 	var operate = function(operation){
 		return function(){
@@ -105,7 +125,8 @@ var init = function(location){
 		getSingleUser:operate(_getSingleUser),
 		getTopicsNameAndDate : operate(_getTopicsNameAndDate),
 		insertUsers:operate(_insertUsers),
-		getUserPassword:operate(_getUserPassword)
+		getUserPassword:operate(_getUserPassword),
+		addAuctionId:operate(_addAuctionId)
 	};
 	return records;
 };

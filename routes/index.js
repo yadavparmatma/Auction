@@ -162,7 +162,10 @@ router.post("/addToAuction/:itemId",function(req,res){
 	var detail = req.body;
 	auction.getUserPassword(detail.email,function(err,status){
 		if(bcrypt.compareSync(detail.password,status.password)){
-			res.json({message:"You are Success fully registered"});
+			auction.addAuctionId(detail,function(err){
+				if(err)
+					res.send("You are registerd Success fully");
+			})
 		}
 		else{
 			res.json({message:"You entered Wrong ID or Password or Not a Existing User"});
