@@ -3,7 +3,7 @@ var _ = require("lodash");
 
 
 var _getTopicsNameAndDate = function(db,onComplete) {
-	var get_topics_query = 'select id,name,date,status from items;';
+	var get_topics_query = 'select id,name,date,status from items order by start_Time desc;;';
 	db.all(get_topics_query,onComplete);
 }
 
@@ -67,8 +67,8 @@ var _getUserPassword = function (email_id, db, onComplete) {
 };
 
 var _insertItem = function(newItem,db,onComplete){
-	var insertQry = "insert into items (name,description,date,base_price,status)values('"+newItem.name+"','"+
-		newItem.desc+"','"+newItem.date+"',"+newItem.basePrice+",'"+newItem.status+"');";
+	var insertQry = "insert into items (name,description,date,base_price,status,start_Time)values('"+newItem.name+"','"+
+		newItem.desc+"','"+newItem.date+"','"+newItem.basePrice+"','"+newItem.status+"','"+newItem.start_Time+"');";
 	db.run(insertQry,onComplete);
 
 }
