@@ -11,3 +11,16 @@ a {
 	height: 80px;
 	width: 170px;
 }
+
+.admin{
+	height: 30px;
+	width: 48%;
+	margin-left: 55%;
+	display: inline;
+}
+
+.user{
+	height: 30px;
+	width: 48%;
+	display: inline;
+}

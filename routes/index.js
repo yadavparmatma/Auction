@@ -26,6 +26,10 @@ var requireLogin = function(req,res,next){
 	req.session.user_name? next(): res.redirect('/adminLogin');
 };
 
+var requireLoginForUser = function(req,res,next){
+	req.session.userEmail? next(): res.redirect('/userLogin');
+};
+
 router.use(loadUserFromSession);
 
 router.get('/', function(req, res) {
@@ -38,6 +42,52 @@ router.get('/', function(req, res) {
 
 router.get('/adminLogin',function(req,res){
 	res.render('adminLogin');
+});
+
+router.get('/userLogin',function(req,res){
+	res.render('userLogin');
+});
+
+router.get('/userLogout',function(req,res){
+	req.session.destroy();
+	res.redirect('/userLogin');
+});
+
+router.post('/userLogin',function(req,res){
+	var userInfo = req.body;
+	var callback = function(error,data){
+		if(((data===undefined) || error || 
+			(!bcrypt.compareSync(userInfo.password,data.password)))){
+		 	res.render('userLogin', {error:"Invalid Username or Password.."});
+		};
+		if(!error && (data!==undefined) && 
+			bcrypt.compareSync(userInfo.password,data.password)){
+			req.session.userEmail = userInfo.email_id;
+			req.session.user_id = data.id;
+			req.session.name = data.name;
+  			res.redirect('/userDashboard');
+		};
+	};
+
+	auction.getUserPassword(userInfo.email_id,callback);
+});
+
+router.get('/userRegistration',function(req,res){
+	res.render('userRegistration');
+});
+
+router.get('/userDashboard',requireLoginForUser,function(req,res){
+	res.render('userDashboard');
+});
+
+router.post('/userRegistration',function(req,res){
+	var userInfo = req.body;
+	userInfo.password = bcrypt.hashSync(userInfo.password);
+	var callback = function(error){
+		error && res.render('/', {error:"User already present.."});
+		!error && res.redirect('/userLogin');
+	};
+	auction.insertUsers(userInfo,callback);
 });
 
 router.get('/adminDashboard',requireLogin,function(req,res){
@@ -85,6 +135,45 @@ router.post("/addItems",function(req,res){
 		}
 	});
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 module.exports = router;
