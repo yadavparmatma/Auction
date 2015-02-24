@@ -1,0 +1,25 @@
+extends logged_page_layout
+block vars
+ - var title = "userDashboard"
+
+block content
+ div
+  center
+   h1 Welcome #{userName}
+ //- table(cellpadding=5)
+  //- tr 
+  //-  th Name :
+  //-  td #{allDetail.name}
+  //- tr
+  //-  th Description :
+  //-  td #{allDetail.description}
+  //- tr
+  //-  th Date :
+  //-  td #{allDetail.date}
+  //- tr
+  //-  th BasePrice :
+  //-  td #{allDetail.base_price}
+  //- tr
+  //-  th status :
+  //-  td #{allDetail.status}
+  //- tr
