@@ -76,9 +76,6 @@ router.get('/userRegistration',function(req,res){
 	res.render('userRegistration');
 });
 
-router.get('/userDashboard',requireLoginForUser,function(req,res){
-	res.render('userDashboard');
-});
 
 router.post('/userRegistration',function(req,res){
 	var userInfo = req.body;
@@ -158,7 +155,7 @@ router.post("/addItems",function(req,res){
 
 
 
-router.get('/userDashboard',requireLogin,function(req,res){
+router.get('/userDashboard',requireLoginForUser,function(req,res){
 	// var id = req.session.user_id;
 	var id =2;
 	var items = {};

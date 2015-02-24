@@ -114,7 +114,7 @@ var init = function(location){
 		getPassword:operate(_getPassword),
 		getSingleUser:operate(_getSingleUser),
 		getTopicsNameAndDate : operate(_getTopicsNameAndDate),
-		getJoinedAuctions: operate(_getJoinedAuctions)
+		getJoinedAuctions: operate(_getJoinedAuctions),
 		insertUsers:operate(_insertUsers),
 		getUserPassword:operate(_getUserPassword)
 	};
