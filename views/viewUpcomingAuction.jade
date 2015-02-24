@@ -5,3 +5,16 @@ block vars
 block content
  h1 
   i Upcoming Auction
+ table(cellpadding=5)
+      tr
+        th ItemName
+        th Upcoming_Date
+        th Status
+        th Description
+      tr
+      each topic in upcomingAuction
+        tr
+          td #{topic.name}
+          td #{topic.date}
+          td #{topic.status}
+          td #{topic.description}

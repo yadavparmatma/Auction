@@ -168,7 +168,11 @@ router.get('/userDashboard',requireLoginForUser,function(req,res){
 
 
 router.get('/viewUpcomingAuction',requireLogin,function(req,res){
-	res.render('viewUpcomingAuction');
+	auction.getUpcomingAuction(function(err,upcomingAuction){
+		res.render('viewUpcomingAuction',{
+			upcomingAuction : upcomingAuction
+		});
+	})
 });
 
 
