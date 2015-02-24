@@ -10,7 +10,18 @@ block content
  div
   | List of Auctions you joined
   ul
+  table(cellpadding = 2 border= 1)
+   tr
+     th ItemID
+     th ItemName
+     th ItemDescription
+     th Last_Date
+     th Base Price
+     th Status
+     th Start time
    each item in itemsDetails
-    h2 itemsDetails 
+    tr 
     each val,key in item
-     li= key + ': ' + val
+      if(val)
+       td
+        a(href='/auction/#{item.id}') #{val}
