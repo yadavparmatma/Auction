@@ -160,12 +160,11 @@ router.post("/addToAuction/:itemId",function(req,res){
 	auction.getUserPassword(detail.email,function(err,status){
 		if(bcrypt.compareSync(detail.password,status.password)){
 			auction.addAuctionId(detail,function(err){
-				if(err)
-					res.send("You are registerd Success fully");
+				res.json({message:"successfully registered"});
 			})
 		}
 		else{
-			res.json({message:"You entered Wrong ID or Password or Not a Existing User"});
+			res.json({message:"Register first or You entered wrong password"});
 		}
 	});
 });
@@ -229,7 +228,11 @@ router.get('/userDashboard',requireLoginForUser,function(req,res){
 
 
 router.get('/viewUpcomingAuction',requireLogin,function(req,res){
-	res.render('viewUpcomingAuction');
+	auction.getUpcomingAuction(function(err,upcomingAuction){
+		res.render('viewUpcomingAuction',{
+			upcomingAuction : upcomingAuction
+		});
+	})
 });
 
 

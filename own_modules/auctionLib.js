@@ -4,7 +4,7 @@ var squel = require("squel");
 
 
 var _getTopicsNameAndDate = function(db,onComplete) {
-	var get_topics_query = 'select id,name,date,status from items order by start_Time desc;;';
+	var get_topics_query = 'select id,name,date,status from items order by start_Time desc;';
 	db.all(get_topics_query,onComplete);
 }
 
@@ -34,7 +34,6 @@ var selectQueryMaker = function (tableName, retrivalData, where) {
 
 var insertInto = function (db, fields, data, tableName, onComplete) {
 	var query = insertQueryMaker(tableName, data, fields);
-	console.log(query);
 	db.run(query, onComplete);
 };
 
@@ -112,6 +111,21 @@ var _addAuctionId = function(detail,db,onComplete){
 		});
 	});
 };
+var compareTime = function(oldDate){
+	var newDate = new Date();
+	return Date.parse(oldDate) > Date.parse(newDate);
+}
+
+var _getUpcomingAuction = function(db,onComplete){
+	db.all('select * from items',function(err,itemsList){
+		var newItemList = itemsList.filter(function(itemList){
+			if(compareTime(itemList.date))
+				return itemList;
+		})
+		
+		onComplete(null,newItemList);
+	})
+}
 
 var init = function(location){	
 	var operate = function(operation){
@@ -140,7 +154,8 @@ var init = function(location){
 		getJoinedAuctions: operate(_getJoinedAuctions),
 		insertUsers:operate(_insertUsers),
 		getUserPassword:operate(_getUserPassword),
-		addAuctionId:operate(_addAuctionId)
+		addAuctionId:operate(_addAuctionId),
+		getUpcomingAuction : operate(_getUpcomingAuction)
 	};
 	return records;
 };

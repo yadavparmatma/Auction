@@ -6,6 +6,9 @@ var my_time = hour+':'+minute;
 console.log(my_time);
 
 
-// Date.parse('25/09/2013 13:31') > Date.parse('25/09/2013 9:15')
-var hiii =  Date.parse('25/09/2013 13:31');
+var hiii =  Date.parse('2014-12-15');
 console.log("jooo",hiii);
+var date  = new Date();
+var st = Date.parse(date);
+console.log("jooo",st);
+console.log(Date.parse(hiii) > Date.parse(st));

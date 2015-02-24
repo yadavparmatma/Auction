@@ -10,14 +10,15 @@ html
 		h1(style = "text-align: center;") Online-Auction
 		a(href='/') Home
 	body
-		hr
-		|Email-Id : 
-		input(type="email" required id="email")
-		br
-		br
-		|Password : 
-		input(type="password" required id="password")
-		br
-		br
-		button(id="register") Submit
-		div(id="message" name="message")
+		form(name="option")
+			hr
+			|Email-Id : 
+			input(type="email" id="email" required)
+			br
+			br
+			|Password : 
+			input(type="password" id="password" required)
+			br
+			br
+			button(id="register") Submit
+			div(id="message" name="message")
