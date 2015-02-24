@@ -48,5 +48,27 @@ describe('auction', function() {
 			});
 		});
 	});
+	describe('#insertItems', function() {
+		it('insert all detail of insertItem', function(done) {
+			var itemDetail = {
+					name: 'bat',
+					description:"it is viratkholi bat",
+					date: '2015-02-23',
+					base_price:25000,
+					start_Time :"Tue Feb 24 2015 11:03:31",
+					status:'open',
+					sold_price:null
+				}
+			auction.insertItem(itemDetail,function(err){
+				assert.notOk(err);
+			auction.getItemsAllDetail(1,function(err, itemName) {
+				assert.deepEqual(itemName.name,"bat")
+				assert.deepEqual(itemName.status,"open")
+				assert.deepEqual(itemName.description,"it is viratkholi bat ")
+				done();
+			});
+			});
+		});
+	});
 
 });
