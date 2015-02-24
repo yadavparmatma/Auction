@@ -64,9 +64,18 @@ var _insertItem = function(newItem,db,onComplete){
 	var insertQry = "insert into items (name,description,date,base_price,status)values('"+newItem.name+"','"+
 		newItem.desc+"','"+newItem.date+"',"+newItem.basePrice+",'"+newItem.status+"');";
 	db.run(insertQry,onComplete);
-
 }
 
+var _getJoinedAuctions = function(id,db,onComplete){
+	var selectJoinedItem = "select items_id from users where id = "+ id;
+
+	db.get(selectJoinedItem,function(err,joinedAuctions){
+		var getTtemsDetails = "select * from items where id ="+JSON.parse(joinedAuctions.items_id).join(' or ')+";";
+		db.all(getTtemsDetails,function(er,itemDetails){
+			onComplete(null,itemDetails);
+		}) 
+	});
+}
 
 var init = function(location){	
 	var operate = function(operation){
@@ -91,7 +100,8 @@ var init = function(location){
 		insertItem : operate(_insertItem),
 		getPassword:operate(_getPassword),
 		getSingleUser:operate(_getSingleUser),
-		getTopicsNameAndDate : operate(_getTopicsNameAndDate)
+		getTopicsNameAndDate : operate(_getTopicsNameAndDate),
+		getJoinedAuctions: operate(_getJoinedAuctions)
 	};
 	return records;
 };
@@ -108,3 +118,4 @@ exports.queryHandler = {
 	select: select,
 	insertInto: insertInto
 };
+

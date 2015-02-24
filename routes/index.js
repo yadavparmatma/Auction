@@ -86,4 +86,53 @@ router.post("/addItems",function(req,res){
 });
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+router.get('/userDashboard',requireLogin,function(req,res){
+	// var id = req.session.user_id;
+	var id =2;
+	var items = {};
+	auction.getJoinedAuctions(id,function(err,joinedAuctionsDetails){
+		items.userName = "parmatma";
+		items.itemsDetails = joinedAuctionsDetails;
+		res.render('userDashboard',items);
+	})	
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 module.exports = router;
