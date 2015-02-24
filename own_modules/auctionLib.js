@@ -3,7 +3,7 @@ var _ = require("lodash");
 
 
 var _getTopicsNameAndDate = function(db,onComplete) {
-	var get_topics_query = 'select id,name,date,status from items order by start_Time desc;;';
+	var get_topics_query = 'select id,name,date,status from items order by start_Time desc;';
 	db.all(get_topics_query,onComplete);
 }
 
@@ -80,6 +80,21 @@ var _insertUsers = function (userData, db, onComplete) {
 	insertInto(db, fields, data, 'users', onComplete);
 };
 
+var compareTime = function(oldDate){
+	var newDate = new Date();
+	return Date.parse(oldDate) > Date.parse(newDate);
+}
+
+var _getUpcomingAuction = function(db,onComplete){
+	db.all('select * from items',function(err,itemsList){
+		var newItemList = itemsList.filter(function(itemList){
+			compareTime(itemList.date)
+				return itemList;
+		})
+		onComplete(null,newItemList);
+	})
+}
+
 var init = function(location){	
 	var operate = function(operation){
 		return function(){
@@ -103,9 +118,9 @@ var init = function(location){
 		insertItem : operate(_insertItem),
 		getPassword:operate(_getPassword),
 		getSingleUser:operate(_getSingleUser),
-		getTopicsNameAndDate : operate(_getTopicsNameAndDate),
 		insertUsers:operate(_insertUsers),
-		getUserPassword:operate(_getUserPassword)
+		getUserPassword:operate(_getUserPassword),
+		getUpcomingAuction : operate(_getUpcomingAuction)
 	};
 	return records;
 };

@@ -70,5 +70,33 @@ describe('auction', function() {
 			});
 		});
 	});
+	describe('#getUpcomingAuction', function() {
+		it('retrieves all UpcomingAuction for upcoming date', function(done) {
+			var expected = [{
+					id : 1,
+					name: 'bat',
+					description:"it is viratkholi bat ",
+					date: '2015-02-23',
+					base_price:25000,
+					start_Time :"Tue Feb 24 2015 11:03:31",
+					status:'open',
+					sold_price:null
+				},{
+					id : 2,
+					name: 'ball',
+					description:"very bad",
+					date: '2015-03-14',
+					base_price:600,
+					start_Time :"Tue Feb 24 2015 11:08:31",
+					status:'open',
+					sold_price:null
+				}]
+			auction.getUpcomingAuction(function(err, itemsList) {
+				assert.notOk(err);
+				assert.deepEqual(itemsList,expected )
+				done();
+			});
+		});
+	});
 
 });
