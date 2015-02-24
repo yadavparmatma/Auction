@@ -89,6 +89,7 @@ var _insertUsers = function (userData, db, onComplete) {
 	insertInto(db, fields, data, 'users', onComplete);
 };
 
+
 var compareTime = function(oldDate){
 	var newDate = new Date();
 	return Date.parse(oldDate) > Date.parse(newDate);
