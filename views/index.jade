@@ -6,15 +6,23 @@ block content
   center
    h1 Online-Auction
    <hr></hr>
-   p For Auction Master(Admin) 
-    a(href="/adminLogin") Login
+   div(class="user") Auction Bidder(User)
+    | &nbsp;
+    a(href='/userRegistration') Registration
+    | &nbsp;....
+    a(href='/userLogin') userLogin
+   div(class="admin") Auction Master(Admin)
+    | &nbsp;
+    a(href='/adminLogin') Login
+    if msg
+     p MSG: #{msg}
   br
   <hr></hr>
   h2 AUCTIONS LIST
   table(cellpadding=5 border='1')
       tr
         th ItemName
-        th Date
+        th Last_Date
         th Status
       tr
       each topic in topics

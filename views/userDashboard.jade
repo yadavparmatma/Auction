@@ -6,20 +6,13 @@ block content
  div
   center
    h1 Welcome #{userName}
- //- table(cellpadding=5)
-  //- tr 
-  //-  th Name :
-  //-  td #{allDetail.name}
-  //- tr
-  //-  th Description :
-  //-  td #{allDetail.description}
-  //- tr
-  //-  th Date :
-  //-  td #{allDetail.date}
-  //- tr
-  //-  th BasePrice :
-  //-  td #{allDetail.base_price}
-  //- tr
-  //-  th status :
-  //-  td #{allDetail.status}
-  //- tr
+    title Auction #{title}
+    link(rel='stylesheet', href="/stylesheets/style.css")
+    h1(style = "text-align: center;") Online-Auction
+    a(href='/') Home
+
+    div(class="topbar" align='right') Prashant
+      |&nbsp;... 
+      a(href='/userLogout') Logout
+      hr
+    h2 List of add auction
