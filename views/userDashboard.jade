@@ -1,14 +1,16 @@
+extends logged_page_layout
 block vars
  - var title = "userDashboard"
+ link(rel='stylesheet', href="/stylesheets/style.css")
 
 block content
-    title Auction #{title}
-    link(rel='stylesheet', href="/stylesheets/style.css")
-    h1(style = "text-align: center;") Online-Auction
-    a(href='/') Home
-
-    div(class="topbar" align='right') Prashant
-      |&nbsp;... 
-      a(href='/userLogout') Logout
-      hr
-    h2 List of add auction
+ div
+  center
+   h1 Welcome #{userName}
+ div
+  | List of Auctions you joined
+  ul
+   each item in itemsDetails
+    h2 itemsDetails 
+    each val,key in item
+     li= key + ': ' + val

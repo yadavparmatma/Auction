@@ -76,9 +76,6 @@ router.get('/userRegistration',function(req,res){
 	res.render('userRegistration');
 });
 
-router.get('/userDashboard',requireLoginForUser,function(req,res){
-	res.render('userDashboard');
-});
 
 router.post('/userRegistration',function(req,res){
 	var userInfo = req.body;
@@ -203,6 +200,37 @@ router.post("/addToAuction/:itemId",function(req,res){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+router.get('/userDashboard',requireLoginForUser,function(req,res){
+	// var id = req.session.user_id;
+	var id =2;
+	var items = {};
+	auction.getJoinedAuctions(id,function(err,joinedAuctionsDetails){
+		items.userName = "parmatma";
+		items.itemsDetails = joinedAuctionsDetails;
+		res.render('userDashboard',items);
+	})	
+})
+
+
+router.get('/viewUpcomingAuction',requireLogin,function(req,res){
+	res.render('viewUpcomingAuction');
+});
 
 
 
