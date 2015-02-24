@@ -91,6 +91,10 @@ router.get('/adminDashboard',requireLogin,function(req,res){
 	res.render('adminDashboard');
 });
 
+router.get('/auction/:id',requireLogin,function(req,res){
+	res.render('auction');
+});
+
 router.get('/adminLogout',function(req,res){
 	req.session.destroy();
 	res.redirect('/adminLogin');
@@ -113,9 +117,7 @@ router.post('/adminLogin',function(req,res){
 
 router.get('/itemDescription/:id', function(req, res) {
 	auction.getItemsAllDetail(req.params.id,function(err, allDetail){
-  		res.render('itemDescription', {
-  		  allDetail: allDetail
-  		}); 
+  		res.render('itemDescription', {allDetail: allDetail}); 
   	});
 });
 
@@ -132,6 +134,68 @@ router.post("/addItems",function(req,res){
 		}
 	});
 });
+
+router.get("/registerAuction/:itemId",function(req,res){
+	res.render("registerAuction");
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+router.post("/addToAuction/:itemId",function(req,res){
+	var detail = req.body;
+	auction.getUserPassword(detail.email,function(err,status){
+		if(bcrypt.compareSync(detail.password,status.password)){
+			auction.addAuctionId(detail,function(err){
+				res.json({message:"successfully registered"});
+			})
+		}
+		else{
+			res.json({message:"Register first or You entered wrong password"});
+		}
+	});
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

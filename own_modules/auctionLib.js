@@ -1,5 +1,6 @@
 var sqlite3 = require("sqlite3").verbose();
 var _ = require("lodash");
+var squel = require("squel");
 
 
 var _getTopicsNameAndDate = function(db,onComplete) {
@@ -83,10 +84,33 @@ var _getJoinedAuctions = function(id,db,onComplete){
 }
 
 var _insertUsers = function (userData, db, onComplete) {
-	var fields = ['name', 'email_id', 'password'];
-	var data = [userData.name, userData.email_id, userData.password];
+	var fields = ['name', 'email_id', 'password','items_id'];
+	var data = [userData.name, userData.email_id, userData.password,'[]'];
 
 	insertInto(db, fields, data, 'users', onComplete);
+};
+
+
+
+var get_update_users_query = function(detail,parsedArray){
+	return (squel.update().table("users")
+			.set("items_id",JSON.stringify(parsedArray))
+			.where("email_id= ?",detail.email)).toString();
+};
+
+var _addAuctionId = function(detail,db,onComplete){
+	console.log(detail);
+	var selectQry = "select items_id from users where email_id='"+detail.email+"';";
+	db.get(selectQry,function(err,data){
+		var item_ids = JSON.parse(data.items_id);
+		item_ids.push(+(detail.itemId));
+		var updateQry = get_update_users_query(detail,item_ids);
+		db.run(updateQry,function(er){
+			if(er)
+				console.log(er);
+			onComplete(null);
+		});
+	});
 };
 
 
@@ -133,6 +157,7 @@ var init = function(location){
 		getJoinedAuctions: operate(_getJoinedAuctions),
 		insertUsers:operate(_insertUsers),
 		getUserPassword:operate(_getUserPassword),
+		addAuctionId:operate(_addAuctionId),
 		getUpcomingAuction : operate(_getUpcomingAuction)
 	};
 	return records;
