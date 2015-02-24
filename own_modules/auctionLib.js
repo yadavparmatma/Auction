@@ -85,8 +85,8 @@ var _getJoinedAuctions = function(id,db,onComplete){
 }
 
 var _insertUsers = function (userData, db, onComplete) {
-	var fields = ['name', 'email_id', 'password'];
-	var data = [userData.name, userData.email_id, userData.password];
+	var fields = ['name', 'email_id', 'password','items_id'];
+	var data = [userData.name, userData.email_id, userData.password,'[]'];
 
 	insertInto(db, fields, data, 'users', onComplete);
 };
@@ -99,13 +99,16 @@ var get_update_users_query = function(detail,parsedArray){
 };
 
 var _addAuctionId = function(detail,db,onComplete){
+	console.log(detail);
 	var selectQry = "select items_id from users where email_id='"+detail.email+"';";
 	db.get(selectQry,function(err,data){
-		var parsedArray = JSON.parse(data['items_id']);
-		parsedArray.push(detail.itemId);
-		var updateQry = get_update_users_query(detail,parsedArray);
-		db.run(updateQry,function(err){
-			onComplete(err);
+		var item_ids = JSON.parse(data.items_id);
+		item_ids.push(+(detail.itemId));
+		var updateQry = get_update_users_query(detail,item_ids);
+		db.run(updateQry,function(er){
+			if(er)
+				console.log(er);
+			onComplete(null);
 		});
 	});
 };
