@@ -91,6 +91,10 @@ router.get('/adminDashboard',requireLogin,function(req,res){
 	res.render('adminDashboard');
 });
 
+router.get('/auction/:id',requireLogin,function(req,res){
+	res.render('auction');
+});
+
 router.get('/adminLogout',function(req,res){
 	req.session.destroy();
 	res.redirect('/adminLogin');
