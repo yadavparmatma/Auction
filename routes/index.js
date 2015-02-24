@@ -160,6 +160,27 @@ router.post("/addItems",function(req,res){
 
 
 
+router.get('/viewUpcomingAuction',requireLogin,function(req,res){
+	res.render('viewUpcomingAuction');
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
