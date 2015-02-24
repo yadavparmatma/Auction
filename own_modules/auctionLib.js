@@ -33,7 +33,6 @@ var selectQueryMaker = function (tableName, retrivalData, where) {
 
 var insertInto = function (db, fields, data, tableName, onComplete) {
 	var query = insertQueryMaker(tableName, data, fields);
-	console.log(query);
 	db.run(query, onComplete);
 };
 
@@ -91,7 +90,7 @@ var _getUpcomingAuction = function(db,onComplete){
 			if(compareTime(itemList.date))
 				return itemList;
 		})
-		// console.log(new)
+		
 		onComplete(null,newItemList);
 	})
 }

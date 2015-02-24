@@ -34,7 +34,6 @@ router.use(loadUserFromSession);
 
 router.get('/', function(req, res) {
 	auction.getTopicsNameAndDate(function(err, topics){
-		console.log(topics);
   		res.render('index', {
   		  topics: topics
   		}); 
@@ -161,13 +160,13 @@ router.post("/addItems",function(req,res){
 
 
 
-// router.get('/viewUpcomingAuction',requireLogin,function(req,res){
-// 	auction.getUpcomingAuction(function(err,upcomingAuction){
-// 		res.render('viewUpcomingAuction',{
-// 			upcomingAuction : upcomingAuction
-// 		});
-// 	})
-// });
+router.get('/viewUpcomingAuction',requireLogin,function(req,res){
+	auction.getUpcomingAuction(function(err,upcomingAuction){
+		res.render('viewUpcomingAuction',{
+			upcomingAuction : upcomingAuction
+		});
+	})
+});
 
 
 
