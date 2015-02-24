@@ -66,9 +66,7 @@ router.post('/adminLogin',function(req,res){
 
 router.get('/itemDescription/:id', function(req, res) {
 	auction.getItemsAllDetail(req.params.id,function(err, allDetail){
-  		res.render('itemDescription', {
-  		  allDetail: allDetail
-  		}); 
+  		res.render('itemDescription', {allDetail: allDetail}); 
   	});
 });
 
@@ -84,6 +82,66 @@ router.post("/addItems",function(req,res){
 		}
 	});
 });
+
+router.get("/registerAuction/:itemId",function(req,res){
+	res.render("registerAuction");
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+router.post("/addToAuction/:itemId",function(req,res){
+	var detail = req.body;
+	auction.getUserPassword(detail.email,function(err,status){
+		if(bcrypt.compareSync(detail.password,status.password)){
+			res.json({message:"You are Success fully registered"});
+		}
+		else{
+			res.json({message:"You entered Wrong ID or Password or Not a Existing User"});
+		}
+	});
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 module.exports = router;

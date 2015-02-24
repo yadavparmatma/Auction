@@ -11,3 +11,7 @@ a {
 	height: 80px;
 	width: 170px;
 }
+
+td {
+	text-align: left;
+}
