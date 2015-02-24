@@ -52,7 +52,9 @@ router.get('/userLogout',function(req,res){
 	req.session.destroy();
 	res.redirect('/userLogin');
 });
-
+router.get("userDashboard",function(req,res){
+	res.render("userDashboard/:"+req.session.id);
+})
 router.post('/userLogin',function(req,res){
 	var userInfo = req.body;
 	var callback = function(error,data){
