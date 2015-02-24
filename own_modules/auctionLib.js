@@ -3,7 +3,7 @@ var _ = require("lodash");
 
 
 var _getTopicsNameAndDate = function(db,onComplete) {
-	var get_topics_query = 'select id,name,date,status from items;';
+	var get_topics_query = 'select id,name,date,status from items order by start_Time desc;;';
 	db.all(get_topics_query,onComplete);
 }
 
@@ -33,6 +33,7 @@ var selectQueryMaker = function (tableName, retrivalData, where) {
 
 var insertInto = function (db, fields, data, tableName, onComplete) {
 	var query = insertQueryMaker(tableName, data, fields);
+	console.log(query);
 	db.run(query, onComplete);
 };
 
@@ -60,13 +61,24 @@ var _getPassword = function (user_name, db, onComplete) {
 	select(db, onComplete, 'admin', 'get', ['user_name','password'], whereToGet);
 };
 
+var _getUserPassword = function (email_id, db, onComplete) {
+	var whereToGet = {email_Id: email_id};
+	select(db, onComplete, 'users', 'get', ['password', 'id', 'name'], whereToGet);
+};
+
 var _insertItem = function(newItem,db,onComplete){
-	var insertQry = "insert into items (name,description,date,base_price,status)values('"+newItem.name+"','"+
-		newItem.desc+"','"+newItem.date+"',"+newItem.basePrice+",'"+newItem.status+"');";
+	var insertQry = "insert into items (name,description,date,base_price,status,start_Time)values('"+newItem.name+"','"+
+		newItem.desc+"','"+newItem.date+"','"+newItem.basePrice+"','"+newItem.status+"','"+newItem.start_Time+"');";
 	db.run(insertQry,onComplete);
 
 }
 
+var _insertUsers = function (userData, db, onComplete) {
+	var fields = ['name', 'email_id', 'password'];
+	var data = [userData.name, userData.email_id, userData.password];
+
+	insertInto(db, fields, data, 'users', onComplete);
+};
 
 var init = function(location){	
 	var operate = function(operation){
@@ -91,7 +103,9 @@ var init = function(location){
 		insertItem : operate(_insertItem),
 		getPassword:operate(_getPassword),
 		getSingleUser:operate(_getSingleUser),
-		getTopicsNameAndDate : operate(_getTopicsNameAndDate)
+		getTopicsNameAndDate : operate(_getTopicsNameAndDate),
+		insertUsers:operate(_insertUsers),
+		getUserPassword:operate(_getUserPassword)
 	};
 	return records;
 };
