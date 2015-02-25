@@ -76,7 +76,7 @@ var _getJoinedAuctions = function(id,db,onComplete){
 	var selectJoinedItem = "select items_id from users where id = "+ id;
 
 	db.get(selectJoinedItem,function(err,joinedAuctions){
-		var getTtemsDetails = "select * from items where id ="+JSON.parse(joinedAuctions.items_id).join(' or id = ')+";";
+		var getTtemsDetails = "select id,name,description,date,base_price,status from items where id ="+JSON.parse(joinedAuctions.items_id).join(' or id = ')+";";
 		db.all(getTtemsDetails,function(er,itemDetails){
 			onComplete(null,itemDetails);
 		}) 
