@@ -12,20 +12,25 @@ html
       a(href='/adminLogout') Logout
       hr
     block scripts
-block content
- center
-  h2 Manage Auction
-  table(cellpadding=5 border=1)
-      tr
-        th ItemName
-        th Date
-        th Status
-        th Description
-        th Start-Auction
-      tr
-          td #{itemDetail.name}
-          td #{itemDetail.date}
-          td #{itemDetail.status}
-          td #{itemDetail.description}
-          td 
-           input(type="submit" value="Start Auction")
+      script(type ="text/javascript" src="/javascripts/jquery-2.1.1.min.js")
+      script(type ="text/javascript" src ="/javascripts/main.js")
+    block content
+     center
+      h2 Manage Auction
+      table(cellpadding=5 border=1)
+          tr
+            th ItemName
+            th Date
+            th Base Price
+            th Status
+            th Description
+            th Start-Auction
+          tr
+              td #{itemDetail.name}
+              td #{itemDetail.date}
+              td #{itemDetail.base_price}
+              td #{itemDetail.status}
+              td #{itemDetail.description}
+              td 
+               input(type="hidden" value='#{itemDetail.id}' id='itemId')
+               button(id="running") Start Auction

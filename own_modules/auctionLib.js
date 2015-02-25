@@ -98,7 +98,6 @@ var get_update_users_query = function(detail,parsedArray){
 };
 
 var _addAuctionId = function(detail,db,onComplete){
-	console.log(detail);
 	var selectQry = "select items_id from users where email_id='"+detail.email+"';";
 	db.get(selectQry,function(err,data){
 		var item_ids = JSON.parse(data.items_id);
@@ -129,6 +128,14 @@ var _getUpcomingAuction = function(db,onComplete){
 	})
 }
 
+var _updateStatus = function(itemId, db, onComplete){
+	var updateStatusQry = "update items set status = 'running' where id = " + itemId;
+	db.run(updateStatusQry, function(err){
+		err && console.log(err);
+		onComplete(null);
+	}); 
+}
+
 var init = function(location){	
 	var operate = function(operation){
 		return function(){
@@ -156,7 +163,8 @@ var init = function(location){
 		insertUsers:operate(_insertUsers),
 		getUserPassword:operate(_getUserPassword),
 		addAuctionId:operate(_addAuctionId),
-		getUpcomingAuction : operate(_getUpcomingAuction)
+		getUpcomingAuction : operate(_getUpcomingAuction),
+		updateStatus: operate(_updateStatus)
 	};
 	return records;
 };
