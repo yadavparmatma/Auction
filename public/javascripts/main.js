@@ -14,15 +14,10 @@ var afterClicking = function(text){
 }
 
 var updateItemStatus = function(){
+	// var itemId = $(".itemId").val();
 	var itemId = $("#itemId").val();
 	$.ajax({url:"/changeStatus/"+itemId,type:"POST"}).done(afterClicking);
 }
-
-
-var checkRegistration = function(){
-
-	
-};
 
 var onPageLoad  = function(){
 	$("#register").click(function(){
