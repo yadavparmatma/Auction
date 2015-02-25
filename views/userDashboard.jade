@@ -9,7 +9,7 @@ html
 
     div(class="topbar" align='right')  #{userName}
       |&nbsp;... 
-      a(href='/userLogin') Logout
+      a(href='/userLogout') Logout
       hr
     block scripts
  div
@@ -21,17 +21,17 @@ html
       th ItemID
       th ItemName
       th ItemDescription
-      th Last_Date
+      th Auction Date
       th Base Price
       th Status
-      th Start time
     each item in itemsDetails
      tr 
      each val,key in item
        if(val)
         td
-         if val == "running" && key == "status"
-          a(href='/auction/#{item.id}') Play Auction
+         if val == "running" && (key == "status" )
+          form(action="/auction/#{item.id}")
+           input(type="submit" name="play" value="Bid Now")
          else
           |#{val}
  div
@@ -39,7 +39,7 @@ html
   table(cellpadding=5 border='1')
       tr
         th ItemName
-        th Last_Date
+        th Auction Date
         th Status
       tr
       each topic in topics

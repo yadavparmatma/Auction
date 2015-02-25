@@ -75,7 +75,7 @@ var _getJoinedAuctions = function(id,db,onComplete){
 	var selectJoinedItem = "select items_id from users where id = "+ id;
 
 	db.get(selectJoinedItem,function(err,joinedAuctions){
-		var getTtemsDetails = "select * from items where id ="+JSON.parse(joinedAuctions.items_id).join(' or id = ')+";";
+		var getTtemsDetails = "select id,name,description,date,base_price,status from items where id ="+JSON.parse(joinedAuctions.items_id).join(' or id = ')+";";
 		db.all(getTtemsDetails,function(er,itemDetails){
 			onComplete(null,itemDetails);
 		}) 
@@ -134,6 +134,18 @@ var _updateStatus = function(itemId, db, onComplete){
 		err && console.log(err);
 		onComplete(null);
 	}); 
+};
+
+var _checkExistance = function(email,db,onComplete){
+	var selectQry = "select password from users where email_id='"+email+"';";
+	db.get(selectQry,function(err,status){
+		if(err){
+			console.log(err);
+			onComplete(err);
+		}
+		else
+			onComplete(null,status);
+	})
 }
 
 var init = function(location){	
@@ -164,7 +176,8 @@ var init = function(location){
 		getUserPassword:operate(_getUserPassword),
 		addAuctionId:operate(_addAuctionId),
 		getUpcomingAuction : operate(_getUpcomingAuction),
-		updateStatus: operate(_updateStatus)
+		updateStatus: operate(_updateStatus),
+		checkExistance:operate(_checkExistance)
 	};
 	return records;
 };

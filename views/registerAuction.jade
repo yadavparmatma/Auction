@@ -8,10 +8,13 @@ html
 		title Auction #{title}
 		link(rel='stylesheet', href="/stylesheets/style.css")
 		h1(style = "text-align: center;") Online-Auction
-		a(href='/') Home
+		a(href='/') Home  
 	body
+		div(class='dash') 
+			a(href='/userDashboard') Dashboard
 		form(name="option")
 			hr
+			h3 Sign In For Register Item
 			|Email-Id : 
 			input(type="email" id="email" required)
 			br
@@ -21,4 +24,8 @@ html
 			br
 			br
 			button(id="register") Submit
-			div(id="message" name="message")
+		div
+			h2 Help-
+			|1:-Already have account Sign in  for Register.
+			br
+			|2:-Don't have account goto home and Register first.

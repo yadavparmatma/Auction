@@ -1,10 +1,14 @@
-extends layout
 block vars
- - var title = "Login"
-
+doctype html
+html
+  head
+    title addItems #{title}
+    link(rel='stylesheet', href="/stylesheets/style.css")
+    h1(style = "text-align: center;") Online-Auction
+    a(href='/') Home
+    hr
+    block scripts
 block content
- a(href="/") Home
- hr
  center
   h1 Login your account
   if error
