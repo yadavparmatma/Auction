@@ -1,14 +1,21 @@
-extends layout
+block vars
+doctype html
+html
+  head
+    link(rel='stylesheet', href="/stylesheets/style.css")
+    h1(style = "text-align: center;") Online-Auction
+    
+    block scripts
 block content
  div
   a(href="/") Home
   div(class='dash') 
     a(href='/userDashboard') Dashboard
+  hr
   div
   center
    h1 Item - Details
  table(cellpadding=5 border='1')
-  hr 
   br
   tr 
    td Name :
