@@ -6,7 +6,6 @@ var express = require('express');
 var router = express.Router();
 
 
-
 var loadUserFromSession = function(req,res,next){
 	req.session.user_name && auction.getSingleUser(req.session.user_name, function(err, user){
 		if(user){
@@ -95,8 +94,7 @@ router.get('/adminDashboard',requireLogin,function(req,res){
 	})
 });
 
-router.get('/auction/:id',requireLoginForUser,function(req,res){
-// router.get('/auction/:id',function(req,res){
+router.get('/auction/:itemId',requireLoginForUser,function(req,res){
 	res.render('auction');
 });
 
@@ -162,6 +160,10 @@ router.get('/userDashboard',requireLoginForUser,function(req,res){
 	var items = {};
 	var id = req.session.user_id;
 	items.userName = req.session.name;
+	auction.getTopicsNameAndDate(function(err, topics){
+  		items.topics = topics;
+  	});
+
 	auction.getJoinedAuctions(id,function(err,joinedAuctionsDetails){
 		items.itemsDetails = joinedAuctionsDetails;
 		res.render('userDashboard',items);
