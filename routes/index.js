@@ -6,7 +6,6 @@ var express = require('express');
 var router = express.Router();
 
 
-
 var loadUserFromSession = function(req,res,next){
 	req.session.user_name && auction.getSingleUser(req.session.user_name, function(err, user){
 		if(user){
@@ -95,7 +94,7 @@ router.get('/adminDashboard',requireLogin,function(req,res){
 	})
 });
 
-router.get('/auction/:id',function(req,res){
+router.get('/auction/:itemId',requireLoginForUser,function(req,res){
 	res.render('auction');
 });
 
@@ -131,7 +130,6 @@ router.get('/addItems',function(req,res){
 
 router.post("/addItems",function(req,res){
 	var newItem  = req.body;
-	newItem.start_Time = new Date().toString().split('GMT')[0];
 	auction.insertItem(newItem,function(err){
 		if(!err){
 			res.redirect("/adminDashboard");
@@ -143,16 +141,22 @@ router.get("/registerAuction/:itemId",function(req,res){
 	res.render("registerAuction");
 });
 
+
+router.get("/addToAuction/:itemId",function(req,res){
+	res.render("addToAuction");
+})
+
 router.post("/addToAuction/:itemId",function(req,res){
-	var detail = req.body;
+	var detail = req.body;		
 	auction.getUserPassword(detail.email,function(err,status){
-		if(bcrypt.compareSync(detail.password,status.password)){
-			auction.addAuctionId(detail,function(err){
-				res.json({message:"successfully registered"});
-			})
+		if(((status==undefined) || err || (!bcrypt.compareSync(detail.password,status.password)))){
+		 	res.json({message:"Invalid User Id or Password"});
 		}
-		else{
-			res.json({message:"Register first or You entered wrong password"});
+		else{ 
+			auction.addAuctionId(detail,function(er){
+				if(!er)
+					res.json({message:"You are Reegistered SuccessFully"});
+			})
 		}
 	});
 });
@@ -162,6 +166,10 @@ router.get('/userDashboard',requireLoginForUser,function(req,res){
 	var items = {};
 	var id = req.session.user_id;
 	items.userName = req.session.name;
+	auction.getTopicsNameAndDate(function(err, topics){
+  		items.topics = topics;
+  	});
+
 	auction.getJoinedAuctions(id,function(err,joinedAuctionsDetails){
 		items.itemsDetails = joinedAuctionsDetails;
 		res.render('userDashboard',items);
@@ -170,7 +178,9 @@ router.get('/userDashboard',requireLoginForUser,function(req,res){
 
 
 router.get("/startAuction/:itemId",function(req,res){
-	res.render("startAuction");
+	auction.getItemsAllDetail(req.params.itemId,function(err, itemDetail){
+  		res.render('startAuction', {itemDetail: itemDetail}); 
+  	});
 });
 
 

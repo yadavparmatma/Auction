@@ -9,9 +9,23 @@ html
 
     div(class="topbar" align='right')  admin
       |&nbsp;... 
-      a(href='/home') Logout
+      a(href='/adminLogout') Logout
       hr
     block scripts
 block content
  center
   h2 Manage Auction
+  table(cellpadding=5 border=1)
+      tr
+        th ItemName
+        th Date
+        th Status
+        th Description
+        th Start-Auction
+      tr
+          td #{itemDetail.name}
+          td #{itemDetail.date}
+          td #{itemDetail.status}
+          td #{itemDetail.description}
+          td 
+           input(type="submit" value="Start Auction")
