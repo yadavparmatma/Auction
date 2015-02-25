@@ -127,6 +127,18 @@ var _getUpcomingAuction = function(db,onComplete){
 	})
 }
 
+var _checkExistance = function(email,db,onComplete){
+	var selectQry = "select password from users where email_id='"+email+"';";
+	db.get(selectQry,function(err,status){
+		if(err){
+			console.log(err);
+			onComplete(err);
+		}
+		else
+			onComplete(null,status);
+	})
+}
+
 var init = function(location){	
 	var operate = function(operation){
 		return function(){
@@ -155,7 +167,8 @@ var init = function(location){
 		insertUsers:operate(_insertUsers),
 		getUserPassword:operate(_getUserPassword),
 		addAuctionId:operate(_addAuctionId),
-		getUpcomingAuction : operate(_getUpcomingAuction)
+		getUpcomingAuction : operate(_getUpcomingAuction),
+		checkExistance:operate(_checkExistance)
 	};
 	return records;
 };

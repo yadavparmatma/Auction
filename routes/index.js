@@ -153,18 +153,22 @@ router.get("/registerAuction/:itemId",function(req,res){
 
 
 
-
+router.get("/addToAuction/:itemId",function(req,res){
+	res.render("addToAuction");
+})
 
 router.post("/addToAuction/:itemId",function(req,res){
-	var detail = req.body;
+	var detail = req.body;		
 	auction.getUserPassword(detail.email,function(err,status){
-		if(bcrypt.compareSync(detail.password,status.password)){
-			auction.addAuctionId(detail,function(err){
-				res.json({message:"successfully registered"});
-			})
+		if(((status===undefined) || err || 
+			(!bcrypt.compareSync(detail.password,status.password)))){
+		 	res.redirect('/');
 		}
-		else{
-			res.json({message:"Register first or You entered wrong password"});
+		else{ 
+			auction.addAuctionId(detail,function(er){
+				if(!er)
+					res.redirect("/registerAuction/:"+detail.itemId);
+			})
 		}
 	});
 });
