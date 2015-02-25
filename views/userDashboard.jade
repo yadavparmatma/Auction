@@ -30,7 +30,8 @@ html
        if(val)
         td
          if val == "running" && (key == "status" )
-          a(href='/auction/#{item.id}') Play Auction
+          form(action="/auction/#{item.id}")
+           input(type="submit" name="play" value="Bid Now")
          else
           |#{val}
  div
