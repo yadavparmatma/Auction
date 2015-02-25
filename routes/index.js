@@ -170,18 +170,9 @@ router.get('/userDashboard',requireLoginForUser,function(req,res){
 })
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+router.get("/startAuction/:itemId",function(req,res){
+	res.render("startAuction");
+});
 
 
 module.exports = router;
