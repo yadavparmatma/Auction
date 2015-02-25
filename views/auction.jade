@@ -1,6 +1,18 @@
-extends logged_page_layout
 block vars
  - var title = "Auction"
+doctype html
+html
+  head
+    title userDashboard #{title}
+    link(rel='stylesheet', href="/stylesheets/style.css")
+    h1(style = "text-align: center;") Online-Auction
+    a(href='/userDashboard') Home
+
+    div(class="topbar" align='right') #{userName}
+      |&nbsp;... 
+      a(href='/userLogin') Logout
+      hr
+    block scripts
 block content
  h2 sorry page not ready yet .
  | go to Dashboard

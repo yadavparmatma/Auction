@@ -6,7 +6,6 @@ var express = require('express');
 var router = express.Router();
 
 
-
 var loadUserFromSession = function(req,res,next){
 	req.session.user_name && auction.getSingleUser(req.session.user_name, function(err, user){
 		if(user){
@@ -88,10 +87,14 @@ router.post('/userRegistration',function(req,res){
 });
 
 router.get('/adminDashboard',requireLogin,function(req,res){
-	res.render('adminDashboard');
+	auction.getUpcomingAuction(function(err,upcomingAuction){
+		res.render('adminDashboard',{
+			upcomingAuction : upcomingAuction
+		});
+	})
 });
 
-router.get('/auction/:items_id',requireLoginForUser,function(req,res){
+router.get('/auction/:itemId',requireLoginForUser,function(req,res){
 	res.render('auction');
 });
 
@@ -127,7 +130,6 @@ router.get('/addItems',function(req,res){
 
 router.post("/addItems",function(req,res){
 	var newItem  = req.body;
-	newItem.start_Time = new Date().toString().split('GMT')[0];
 	auction.insertItem(newItem,function(err){
 		if(!err){
 			res.redirect("/adminDashboard");
@@ -164,6 +166,10 @@ router.get('/userDashboard',requireLoginForUser,function(req,res){
 	var items = {};
 	var id = req.session.user_id;
 	items.userName = req.session.name;
+	auction.getTopicsNameAndDate(function(err, topics){
+  		items.topics = topics;
+  	});
+
 	auction.getJoinedAuctions(id,function(err,joinedAuctionsDetails){
 		items.itemsDetails = joinedAuctionsDetails;
 		res.render('userDashboard',items);
@@ -171,45 +177,11 @@ router.get('/userDashboard',requireLoginForUser,function(req,res){
 })
 
 
-router.get('/viewUpcomingAuction',requireLogin,function(req,res){
-	auction.getUpcomingAuction(function(err,upcomingAuction){
-		res.render('viewUpcomingAuction',{
-			upcomingAuction : upcomingAuction
-		});
-	})
+router.get("/startAuction/:itemId",function(req,res){
+	auction.getItemsAllDetail(req.params.itemId,function(err, itemDetail){
+  		res.render('startAuction', {itemDetail: itemDetail}); 
+  	});
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 module.exports = router;
