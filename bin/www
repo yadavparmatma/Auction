@@ -12,6 +12,5 @@ var server = app.listen(app.get('port'), function() {
 var io = socket_io(server);
 
 io.on('connection', function (socket) {
-	console.log('socket connected ');
  	app.socket = socket;
 });

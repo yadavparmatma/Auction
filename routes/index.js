@@ -195,13 +195,13 @@ router.post("/auction/:itemId",requireLoginForUser,function(req,res){
 	var detail = req.body;
 	auction.insertPrice(detail,function(err){
 		if(!err){
-			broadcastOnSocket(detail.price);
+			broadCast(detail.price);
 			res.end();
 		}
 	})
 })
 
-var broadcastOnSocket =function(bidPrice){
+var broadCast =function(bidPrice){
 	var socket = router.getSocket();
 	socket.broadcast.emit("new_bidPrice",{bidPrice:bidPrice});
 	socket.emit("new_bidPrice",{bidPrice:bidPrice});

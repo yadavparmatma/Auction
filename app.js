@@ -22,7 +22,6 @@ app.use(cookieParser());
 app.use(session({name:'Auction',secret:'secret',cookie:{maxAge:600000}}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.getSocket = function(){
-    console.log("APP:socket",app.socket.id);
     return  app.socket;
 }
 
