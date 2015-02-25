@@ -88,7 +88,6 @@ router.post('/userRegistration',function(req,res){
 
 router.get('/adminDashboard',requireLogin,function(req,res){
 	auction.getUpcomingAuction(function(err,upcomingAuction){
-		console.log(upcomingAuction);
 		res.render('adminDashboard',{
 			upcomingAuction : upcomingAuction
 		});
@@ -167,7 +166,6 @@ router.post("/addToAuction/:itemId",function(req,res){
 router.get('/userDashboard/:id',requireLoginForUser,function(req,res){
 	var items = {};
 	var id = req.session.user_id;
-	console.log(id);
 	items.userName = req.session.name;
 	auction.getTopicsNameAndDate(function(err, topics){
   		items.topics = topics;
@@ -181,8 +179,10 @@ router.get('/userDashboard/:id',requireLoginForUser,function(req,res){
 
 
 router.get("/startAuction/:itemId",function(req,res){
-	auction.getItemsAllDetail(req.params.itemId,function(err, itemDetail){
-  		res.render('startAuction', {itemDetail: itemDetail}); 
+	auction.updateStatus(req.params.itemId,function(error){
+		auction.getItemsAllDetail(req.params.itemId,function(err, itemDetail){
+  			res.render('startAuction', {itemDetail: itemDetail}); 
+		})
   	});
 });
 

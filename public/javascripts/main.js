@@ -30,7 +30,7 @@ var insertPrice = function(){
 	var user_id = $("#user_id").val();
 	var price = $("#bidPrice").val();
 	$.ajax({url:"/auction/:"+itemId,type:"POST", dataType: "json",
-			data:{itemId:itemId,user_id:user_id,price:price}
+		data:{itemId:itemId,user_id:user_id,price:price}
 	});
 }
 
