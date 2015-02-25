@@ -88,10 +88,15 @@ router.post('/userRegistration',function(req,res){
 });
 
 router.get('/adminDashboard',requireLogin,function(req,res){
-	res.render('adminDashboard');
+	auction.getUpcomingAuction(function(err,upcomingAuction){
+		res.render('adminDashboard',{
+			upcomingAuction : upcomingAuction
+		});
+	})
 });
 
 router.get('/auction/:id',requireLoginForUser,function(req,res){
+// router.get('/auction/:id',function(req,res){
 	res.render('auction');
 });
 
@@ -164,45 +169,11 @@ router.get('/userDashboard',requireLoginForUser,function(req,res){
 })
 
 
-router.get('/viewUpcomingAuction',requireLogin,function(req,res){
-	auction.getUpcomingAuction(function(err,upcomingAuction){
-		res.render('viewUpcomingAuction',{
-			upcomingAuction : upcomingAuction
-		});
-	})
+router.get("/startAuction/:itemId",function(req,res){
+	auction.getItemsAllDetail(req.params.itemId,function(err, itemDetail){
+  		res.render('startAuction', {itemDetail: itemDetail}); 
+  	});
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 module.exports = router;
