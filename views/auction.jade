@@ -4,19 +4,24 @@ doctype html
 html
 head
 	title #{title}
+	script(type ="text/javascript" src="/javascripts/jquery-2.1.1.min.js")
+	script(type ="text/javascript" src ="/javascripts/main.js")
+	script(type ="text/javascript" src ="/javascripts/socket.io.js")
 	link(rel='stylesheet', href="/stylesheets/style.css")
 block content
 	h1(style = "text-align: center;") Online-Auction
-	a(href='/userDashboard') Dashboard
+	a(href='/userDashboard/:#{id}') Dashboard
 	div(class="topbar" align='right') #{userName}
 		a(href='/userLogout') Logout
+	div(class="userInfo")
+		input(type ="hidden" id ="user_id" value="#{user_id}")
 	hr
 	div(id="auctionDetail")
 		h3 Participiants 
 		div(id="participants")
 		h3 Current-Price 
 		div(id="price")
-		input(type="text" name="bidPrice" id="bidPrice" placeholder="Enter Price")
+		input(type="number" name="bidPrice" id="bidPrice" placeholder="Enter Price")
 		br
 		br
 		button(type="submit" id="putPrice") Your Price

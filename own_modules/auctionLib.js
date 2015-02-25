@@ -128,6 +128,12 @@ var _getUpcomingAuction = function(db,onComplete){
 	})
 }
 
+var _insertPrice = function(detail,db,onComplete){
+	var fields = ['items_id', 'bidder_id', 'bid_price'];
+	var data = [detail.itemId, detail.user_id, detail.price];
+	insertInto(db, fields, data, 'running_auction', onComplete);
+}
+
 var _updateStatus = function(itemId, db, onComplete){
 	var updateStatusQry = "update items set status = 'running' where id = " + itemId;
 	db.run(updateStatusQry, function(err){
@@ -135,18 +141,6 @@ var _updateStatus = function(itemId, db, onComplete){
 		onComplete(null);
 	}); 
 };
-
-var _checkExistance = function(email,db,onComplete){
-	var selectQry = "select password from users where email_id='"+email+"';";
-	db.get(selectQry,function(err,status){
-		if(err){
-			console.log(err);
-			onComplete(err);
-		}
-		else
-			onComplete(null,status);
-	})
-}
 
 var init = function(location){	
 	var operate = function(operation){
@@ -177,7 +171,7 @@ var init = function(location){
 		addAuctionId:operate(_addAuctionId),
 		getUpcomingAuction : operate(_getUpcomingAuction),
 		updateStatus: operate(_updateStatus),
-		checkExistance:operate(_checkExistance)
+		insertPrice:operate(_insertPrice)
 	};
 	return records;
 };

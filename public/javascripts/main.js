@@ -18,11 +18,21 @@ var updateItemStatus = function(){
 	$.ajax({url:"/changeStatus/"+itemId,type:"POST"}).done(afterClicking);
 }
 
+var insertPrice = function(){
+	var socket = io.connect(window.location.hostname);
 
-var checkRegistration = function(){
+	socket.on('new_bidPrice',function(bidPrice){
+	 	$("#price").html(bidPrice.bidPrice);
+	 	$("#bidPrice").val(""); 		
+	});
 
-	
-};
+	var itemId = getItemId();
+	var user_id = $("#user_id").val();
+	var price = $("#bidPrice").val();
+	$.ajax({url:"/auction/:"+itemId,type:"POST", dataType: "json",
+			data:{itemId:itemId,user_id:user_id,price:price}
+	});
+}
 
 var onPageLoad  = function(){
 	$("#register").click(function(){
@@ -43,27 +53,8 @@ var onPageLoad  = function(){
 			return false;
 		});
 	});
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	$("#running").click(updateItemStatus);
+	$("#putPrice").click(insertPrice);
 };
 
 $(onPageLoad)

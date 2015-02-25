@@ -64,7 +64,7 @@ router.post('/userLogin',function(req,res){
 			req.session.userEmail = userInfo.email_id;
 			req.session.user_id = data.id;
 			req.session.name = data.name;
-  			res.redirect('/userDashboard');
+  			res.redirect('/userDashboard/'+data.id);
 		};
 	};
 
@@ -95,7 +95,8 @@ router.get('/adminDashboard',requireLogin,function(req,res){
 });
 
 router.get('/auction/:itemId',requireLoginForUser,function(req,res){
-	res.render('auction');
+
+	res.render('auction',{user_id:req.session.user_id});
 });
 
 router.get('/adminLogout',function(req,res){
@@ -162,9 +163,10 @@ router.post("/addToAuction/:itemId",function(req,res){
 });
 
 
-router.get('/userDashboard',requireLoginForUser,function(req,res){
+router.get('/userDashboard/:id',requireLoginForUser,function(req,res){
 	var items = {};
 	var id = req.session.user_id;
+	console.log(id);
 	items.userName = req.session.name;
 	auction.getTopicsNameAndDate(function(err, topics){
   		items.topics = topics;
@@ -179,7 +181,6 @@ router.get('/userDashboard',requireLoginForUser,function(req,res){
 
 router.get("/startAuction/:itemId",function(req,res){
 	auction.getItemsAllDetail(req.params.itemId,function(err, itemDetail){
-		console.log(itemDetail);
   		res.render('startAuction', {itemDetail: itemDetail}); 
   	});
 });
@@ -189,5 +190,21 @@ router.post("/changeStatus/:itemId",function(req,res){
 		res.end();
 	})
 })
+
+router.post("/auction/:itemId",requireLoginForUser,function(req,res){
+	var detail = req.body;
+	auction.insertPrice(detail,function(err){
+		if(!err){
+			broadcastOnSocket(detail.price);
+			res.end();
+		}
+	})
+})
+
+var broadcastOnSocket =function(bidPrice){
+	var socket = router.getSocket();
+	socket.broadcast.emit("new_bidPrice",{bidPrice:bidPrice});
+	socket.emit("new_bidPrice",{bidPrice:bidPrice});
+}
 
 module.exports = router;
