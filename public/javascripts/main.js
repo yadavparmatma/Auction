@@ -8,17 +8,6 @@ var showMessage = function(data){
 	$("#message").html(data);
 }
 
-
-var afterClicking = function(text){
-	window.location.reload();
-}
-
-var updateItemStatus = function(){
-	// var itemId = $(".itemId").val();
-	var itemId = $("#itemId").val();
-	$.ajax({url:"/changeStatus/"+itemId,type:"POST"}).done(afterClicking);
-}
-
 var onPageLoad  = function(){
 	$("#register").click(function(){
 		var itemId = getItemId();
@@ -38,27 +27,6 @@ var onPageLoad  = function(){
 			return false;
 		});
 	});
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	$("#running").click(updateItemStatus);
 };
 
 $(onPageLoad)

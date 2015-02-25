@@ -1,0 +1,9 @@
+var afterClicking = function(text){
+	window.location.reload();
+}
+
+var updateItemStatus = function(){
+	// var itemId = $(".itemId").val();
+	var itemId = $("#itemId").val();
+	$.ajax({url:"/changeStatus/"+itemId,type:"POST"}).done(afterClicking);
+}
