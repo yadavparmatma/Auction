@@ -24,13 +24,30 @@ html
             th Base Price
             th Status
             th Description
-            th Start-Auction
           tr
               td #{itemDetail.name}
               td #{itemDetail.date}
               td #{itemDetail.base_price}
               td #{itemDetail.status}
               td #{itemDetail.description}
-              td 
-               input(type="hidden" value='#{itemDetail.id}' id='itemId')
-               button(id="running") Start Auction
+                
+      br 
+      br 
+      br 
+      br 
+      br 
+      br 
+      div
+          label(for='bidder' ) Name Of Bidder
+          input(type="text" id="bidder") 
+          |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          label(for='amount') Current Bid
+          input(type="text" id="amount")
+
+
+
+
+
+
+
+
