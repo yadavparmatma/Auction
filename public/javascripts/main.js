@@ -8,19 +8,31 @@ var showMessage = function(data){
 	$("#message").html(data);
 }
 
+
+
+var checkRegistration = function(){
+
+	
+};
+
 var onPageLoad  = function(){
 	$("#register").click(function(){
 		var itemId = getItemId();
 		var email= $("#email").val();
 		var password = $("#password").val();
-		$.ajax({url:"/addToAuction/:"+itemId,type:"POST", dataType: "json",
-			data:{email:email,password:password,itemId:itemId}});
-		$.ajax("/registerAuction/:"+itemId).done(function(data){
-			alert("you are successfully registered");
-		})
-		$.ajax("/").done(function(data){
-			alert("Email id not registered or you enterd wrong password");
-		})
+		var request = $.ajax({url:"/addToAuction/:"+itemId,type:"POST", dataType: "json",
+			data:{email:email,password:password,itemId:itemId}
+		});
+
+		request.done(function(message){
+			alert(message.message);
+			$("#message").html(message.message);
+			return false;
+		});
+
+		request.fail(function(message){
+			return false;
+		});
 	});
 };
 

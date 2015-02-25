@@ -147,14 +147,13 @@ router.get("/addToAuction/:itemId",function(req,res){
 router.post("/addToAuction/:itemId",function(req,res){
 	var detail = req.body;		
 	auction.getUserPassword(detail.email,function(err,status){
-		if(((status===undefined) || err || 
-			(!bcrypt.compareSync(detail.password,status.password)))){
-		 	res.redirect('/');
+		if(((status==undefined) || err || (!bcrypt.compareSync(detail.password,status.password)))){
+		 	res.json({message:"Invalid User Id or Password"});
 		}
 		else{ 
 			auction.addAuctionId(detail,function(er){
 				if(!er)
-					res.redirect("/registerAuction/:"+detail.itemId);
+					res.json({message:"You are Reegistered SuccessFully"});
 			})
 		}
 	});
