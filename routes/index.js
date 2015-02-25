@@ -88,10 +88,15 @@ router.post('/userRegistration',function(req,res){
 });
 
 router.get('/adminDashboard',requireLogin,function(req,res){
-	res.render('adminDashboard');
+	auction.getUpcomingAuction(function(err,upcomingAuction){
+		res.render('adminDashboard',{
+			upcomingAuction : upcomingAuction
+		});
+	})
 });
 
-router.get('/auction/:id',requireLogin,function(req,res){
+router.get('/auction/:id',function(req,res){
+	console.log(req.params.id);
 	res.render('auction');
 });
 
@@ -163,33 +168,6 @@ router.get('/userDashboard',requireLoginForUser,function(req,res){
 		res.render('userDashboard',items);
 	})	
 })
-
-
-router.get('/viewUpcomingAuction',requireLogin,function(req,res){
-	auction.getUpcomingAuction(function(err,upcomingAuction){
-		res.render('viewUpcomingAuction',{
-			upcomingAuction : upcomingAuction
-		});
-	})
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
