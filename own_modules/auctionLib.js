@@ -3,17 +3,16 @@ var _ = require("lodash");
 
 
 var _getTopicsNameAndDate = function(db,onComplete) {
-	var get_topics_query = 'select id,name,date,status from items order by start_Time desc;;';
+	var get_topics_query = 'select id,name,date,status from items order by start_Time desc;';
 	db.all(get_topics_query,onComplete);
-}
-
+};
 
 var _getItemsAllDetail = function(itemId,db,onComplete){
 	var query = "select * from items where id="+itemId;
 	db.get(query,function(err,allDetails){
 		err || onComplete(null,allDetails);
 	});
-}
+};
 
 var insertQueryMaker = function (tableName, data, fields) {
 	var columns = fields && ' (' + fields.join(', ') + ')' || '';
@@ -103,7 +102,6 @@ var init = function(location){
 		insertItem : operate(_insertItem),
 		getPassword:operate(_getPassword),
 		getSingleUser:operate(_getSingleUser),
-		getTopicsNameAndDate : operate(_getTopicsNameAndDate),
 		insertUsers:operate(_insertUsers),
 		getUserPassword:operate(_getUserPassword)
 	};
