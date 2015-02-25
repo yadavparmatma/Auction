@@ -12,6 +12,10 @@ a {
 	width: 170px;
 }
 
+td {
+	text-align: left;
+}
+
 .admin{
 	height: 30px;
 	width: 48%;

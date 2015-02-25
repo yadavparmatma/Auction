@@ -1,24 +1,31 @@
 extends layout
 block content
  div
+  a(href="/") Home
+
+  div
   center
    h1 Item - Details
-   hr 
-   br
- table(cellpadding=5)
+ table(cellpadding=5 border='1')
+  hr 
+  br
   tr 
-   th Name :
+   td Name :
    td #{allDetail.name}
   tr
-   th Description :
+   td Description :
    td #{allDetail.description}
   tr
-   th Date :
+   td Date :
    td #{allDetail.date}
   tr
-   th BasePrice :
+   td BasePrice :
    td #{allDetail.base_price}
   tr
-   th status :
+   td status :
    td #{allDetail.status}
-  tr
+ br
+ form(action="/registerAuction/#{allDetail.id}")
+  input(type="submit" value="Register for Auction")
+
+

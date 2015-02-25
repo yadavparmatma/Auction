@@ -1,14 +1,33 @@
 block vars
- - var title = "userDashboard"
-
-block content
-    title Auction #{title}
+doctype html
+html
+  head
+    title userDashboard #{title}
     link(rel='stylesheet', href="/stylesheets/style.css")
     h1(style = "text-align: center;") Online-Auction
     a(href='/') Home
 
-    div(class="topbar" align='right') Prashant
+    div(class="topbar" align='right')  #{userName}
       |&nbsp;... 
-      a(href='/userLogout') Logout
+      a(href='/userLogin') Logout
       hr
-    h2 List of add auction
+    block scripts
+ div
+  | List of Auctions you joined
+  if itemsDetails!=undefined
+   ul
+   table(cellpadding = 2 border= 1)
+    tr
+      th ItemID
+      th ItemName
+      th ItemDescription
+      th Last_Date
+      th Base Price
+      th Status
+      th Start time
+    each item in itemsDetails
+     tr 
+     each val,key in item
+       if(val)
+        td
+         a(href='/auction/#{item.id}') #{val}

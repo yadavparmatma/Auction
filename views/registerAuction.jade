@@ -1,0 +1,24 @@
+block vars
+doctype html
+block scripts
+	script(type ="text/javascript" src="/javascripts/jquery-2.1.1.min.js")
+	script(type ="text/javascript" src ="/javascripts/main.js")
+html
+	head
+		title Auction #{title}
+		link(rel='stylesheet', href="/stylesheets/style.css")
+		h1(style = "text-align: center;") Online-Auction
+		a(href='/') Home
+	body
+		form(name="option")
+			hr
+			|Email-Id : 
+			input(type="email" id="email" required)
+			br
+			br
+			|Password : 
+			input(type="password" id="password" required)
+			br
+			br
+			button(id="register") Submit
+			div(id="message" name="message")

@@ -19,7 +19,7 @@ describe('auction', function() {
 					name: 'ball',
 					date: '2015-03-14',
 					status: 'open'
-				},{
+				}, {
 					id: 1,
 					name: 'bat',
 					date: '2015-02-23',
@@ -67,6 +67,25 @@ describe('auction', function() {
 				assert.deepEqual(itemName.description,"it is viratkholi bat ")
 				done();
 			});
+			});
+		});
+	});
+	describe('#getUpcomingAuction', function() {
+		it('retrieves all UpcomingAuction for upcoming date', function(done) {
+			var expected = [{
+					id : 2,
+					name: 'ball',
+					description:"very hard",
+					date: '2015-03-14',
+					base_price:600,
+					start_Time :"Tue Feb 24 2015 11:08:31",
+					status:'open',
+					sold_price:null
+				}]
+			auction.getUpcomingAuction(function(err, itemsList) {
+				assert.notOk(err);
+				assert.deepEqual(itemsList,expected )
+				done();
 			});
 		});
 	});
