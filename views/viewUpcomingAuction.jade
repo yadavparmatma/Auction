@@ -1,14 +1,23 @@
-extends logged_page_layout
 block vars
- - var title = "viewAuction"
+doctype html
+html
+  head
+    title userDashboard #{title}
+    link(rel='stylesheet', href="/stylesheets/style.css")
+    h1(style = "text-align: center;") Online-Auction
+    a(href='/adminDashboard') Home
 
-block content
+    div(class="topbar" align='right') admin
+      |&nbsp;... 
+      a(href='/home') Logout
+      hr
+    block scripts
  h1 
   i Upcoming Auction
  table(cellpadding=5)
       tr
         th ItemName
-        th Upcoming_Date
+        th Date
         th Status
         th Description
       tr

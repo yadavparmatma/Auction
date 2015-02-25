@@ -1,27 +1,33 @@
-extends logged_page_layout
 block vars
- - var title = "userDashboard"
- link(rel='stylesheet', href="/stylesheets/style.css")
+doctype html
+html
+  head
+    title userDashboard #{title}
+    link(rel='stylesheet', href="/stylesheets/style.css")
+    h1(style = "text-align: center;") Online-Auction
+    a(href='/') Home
 
-block content
- div
-  center
-   h1 Welcome #{userName}
+    div(class="topbar" align='right')  #{userName}
+      |&nbsp;... 
+      a(href='/userLogin') Logout
+      hr
+    block scripts
  div
   | List of Auctions you joined
-  ul
-  table(cellpadding = 2 border= 1)
-   tr
-     th ItemID
-     th ItemName
-     th ItemDescription
-     th Last_Date
-     th Base Price
-     th Status
-     th Start time
-   each item in itemsDetails
-    tr 
-    each val,key in item
-      if(val)
-       td
-        a(href='/auction/#{item.id}') #{val}
+  if itemsDetails!=undefined
+   ul
+   table(cellpadding = 2 border= 1)
+    tr
+      th ItemID
+      th ItemName
+      th ItemDescription
+      th Last_Date
+      th Base Price
+      th Status
+      th Start time
+    each item in itemsDetails
+     tr 
+     each val,key in item
+       if(val)
+        td
+         a(href='/auction/#{item.id}') #{val}

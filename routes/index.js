@@ -91,6 +91,10 @@ router.get('/adminDashboard',requireLogin,function(req,res){
 	res.render('adminDashboard');
 });
 
+router.get('/auction/:id',requireLogin,function(req,res){
+	res.render('auction');
+});
+
 router.get('/adminLogout',function(req,res){
 	req.session.destroy();
 	res.redirect('/adminLogin');
@@ -136,23 +140,6 @@ router.get("/registerAuction/:itemId",function(req,res){
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 router.get("/addToAuction/:itemId",function(req,res){
 	res.render("addToAuction");
 })
@@ -174,57 +161,11 @@ router.post("/addToAuction/:itemId",function(req,res){
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 router.get('/userDashboard',requireLoginForUser,function(req,res){
-	// var id = req.session.user_id;
-	var id =2;
 	var items = {};
+	var id = req.session.user_id;
+	items.userName = req.session.name;
 	auction.getJoinedAuctions(id,function(err,joinedAuctionsDetails){
-		items.userName = "parmatma";
 		items.itemsDetails = joinedAuctionsDetails;
 		res.render('userDashboard',items);
 	})	

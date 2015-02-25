@@ -1,7 +1,17 @@
-extends logged_page_layout
 block vars
- - var title = "addItems"
+doctype html
+html
+  head
+    title addItems #{title}
+    link(rel='stylesheet', href="/stylesheets/style.css")
+    h1(style = "text-align: center;") Online-Auction
+    a(href='/adminDashboard') Home
 
+    div(class="topbar" align='right')  admin
+      |&nbsp;... 
+      a(href='/home') Logout
+      hr
+    block scripts
 block content
  center
   br

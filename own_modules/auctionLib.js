@@ -91,6 +91,7 @@ var _insertUsers = function (userData, db, onComplete) {
 };
 
 
+
 var get_update_users_query = function(detail,parsedArray){
 	return (squel.update().table("users")
 			.set("items_id",JSON.stringify(parsedArray))
@@ -111,6 +112,8 @@ var _addAuctionId = function(detail,db,onComplete){
 		});
 	});
 };
+
+
 var compareTime = function(oldDate){
 	var newDate = new Date();
 	return Date.parse(oldDate) > Date.parse(newDate);
