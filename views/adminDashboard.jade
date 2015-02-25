@@ -3,10 +3,27 @@ block vars
  - var title = "adminDashboard"
 
 block content
+  br
+  br
   a(href='/addItems') Add-Items
   br
   br
-  a(href='/manageAuction/') Manage-Auction
-  br
-  br
-  a(href='/viewUpcomingAuction/') View-Upcoming-Auction
+  h1 Upcoming Auction
+  table(cellpadding=5)
+      tr
+        th ItemName
+        th Date
+        th Status
+        th Description
+        th Start-Auction
+      tr
+      each topic in upcomingAuction
+        tr
+          td #{topic.name}
+          td #{topic.date}
+          td #{topic.status}
+          td #{topic.description}
+          td
+           form(action="/startAuction/#{topic.id}")
+            input(type="submit" value="Start Auction")
+
