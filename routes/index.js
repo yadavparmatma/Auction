@@ -179,9 +179,15 @@ router.get('/userDashboard',requireLoginForUser,function(req,res){
 
 router.get("/startAuction/:itemId",function(req,res){
 	auction.getItemsAllDetail(req.params.itemId,function(err, itemDetail){
+		console.log(itemDetail);
   		res.render('startAuction', {itemDetail: itemDetail}); 
   	});
 });
 
+router.post("/changeStatus/:itemId",function(req,res){
+	auction.updateStatus(req.params.itemId,function(err){
+		res.end();
+	})
+})
 
 module.exports = router;

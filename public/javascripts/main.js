@@ -9,6 +9,15 @@ var showMessage = function(data){
 }
 
 
+var afterClicking = function(text){
+	window.location.reload();
+}
+
+var updateItemStatus = function(){
+	var itemId = $("#itemId").val();
+	$.ajax({url:"/changeStatus/"+itemId,type:"POST"}).done(afterClicking);
+}
+
 
 var checkRegistration = function(){
 
@@ -34,6 +43,27 @@ var onPageLoad  = function(){
 			return false;
 		});
 	});
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	$("#running").click(updateItemStatus);
 };
 
 $(onPageLoad)
