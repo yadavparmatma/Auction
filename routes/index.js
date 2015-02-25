@@ -96,7 +96,6 @@ router.get('/adminDashboard',requireLogin,function(req,res){
 });
 
 router.get('/auction/:id',function(req,res){
-	console.log(req.params.id);
 	res.render('auction');
 });
 
