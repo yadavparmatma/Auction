@@ -1,21 +1,26 @@
 block vars
- - var title = "Auction"
+	-var title = "auction" 
 doctype html
 html
-  head
-    title userDashboard #{title}
-    link(rel='stylesheet', href="/stylesheets/style.css")
-    h1(style = "text-align: center;") Online-Auction
-    a(href='/userDashboard') Home
-
-    div(class="topbar" align='right') #{userName}
-      |&nbsp;... 
-      a(href='/userLogout') Logout
-      hr
-    block scripts
+head
+	title #{title}
+	link(rel='stylesheet', href="/stylesheets/style.css")
 block content
- h2 sorry page not ready yet .
- | go to Dashboard
- | &nbsp; &nbsp;
- a(href='/userDashboard') Dashboard
+	h1(style = "text-align: center;") Online-Auction
+	a(href='/userDashboard') Dashboard
+	div(class="topbar" align='right') #{userName}
+		a(href='/userLogout') Logout
+	hr
+	div(id="auctionDetail")
+		h3 Participiants 
+		div(id="participants")
+		h3 Current-Price 
+		div(id="price")
+		input(type="text" name="bidPrice" id="bidPrice" placeholder="Enter Price")
+		br
+		br
+		button(type="submit" id="putPrice") Your Price
+	div(id="result")
+
+
 
