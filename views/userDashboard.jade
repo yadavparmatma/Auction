@@ -13,7 +13,7 @@ html
       hr
     block scripts
  div
-  | List of Auctions you joined
+  h4 List of Auctions you joined
   if itemsDetails!=undefined
    ul
    table(cellpadding = 2 border= 1)
@@ -30,4 +30,21 @@ html
      each val,key in item
        if(val)
         td
-         a(href='/auction/#{item.id}') #{val}
+         if val == "running" && key == "status"
+          a(href='/auction/#{item.id}') Play Auction
+         else
+          |#{val}
+ div
+  h4 AUCTIONS LIST
+  table(cellpadding=5 border='1')
+      tr
+        th ItemName
+        th Last_Date
+        th Status
+      tr
+      each topic in topics
+        tr
+          td 
+           a(href='/itemDescription/#{topic.id}') #{topic.name}
+          td #{topic.date}
+          td #{topic.status}      
