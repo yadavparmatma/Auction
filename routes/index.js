@@ -88,6 +88,7 @@ router.post('/userRegistration',function(req,res){
 
 router.get('/adminDashboard',requireLogin,function(req,res){
 	auction.getUpcomingAuction(function(err,upcomingAuction){
+		console.log(upcomingAuction);
 		res.render('adminDashboard',{
 			upcomingAuction : upcomingAuction
 		});
