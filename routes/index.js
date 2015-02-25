@@ -91,7 +91,7 @@ router.get('/adminDashboard',requireLogin,function(req,res){
 	res.render('adminDashboard');
 });
 
-router.get('/auction/:id',function(req,res){
+router.get('/auction/:items_id',requireLoginForUser,function(req,res){
 	res.render('auction');
 });
 
