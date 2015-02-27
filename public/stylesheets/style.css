@@ -31,3 +31,7 @@ td {
 .dash{
 	text-align: right;
 }
+.error{
+	color:red;
+	font-size: 15px;
+}

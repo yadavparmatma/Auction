@@ -11,8 +11,6 @@ html
 block content
  center
   h1 Login your account
-  if error
-   p ERROR: #{error}
   form(action="/userLogin" method="POST")
    span 
     |Email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -25,3 +23,7 @@ block content
    br
    br
    input(type="submit" value="Login")
+  br
+  br
+  if error
+   label(class="error") ERROR: #{error}

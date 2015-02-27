@@ -22,7 +22,7 @@ var insertPrice = function(){
 	var socket = io.connect(window.location.hostname);
 
 	socket.on('new_bidPrice',function(bidPrice){
-	 	$("#price").html(bidPrice.bidPrice);
+	 	$("#price").html("<b>Cureent Price:  "+bidPrice.bidPrice+"    Rs.");
 	 	$("#bidPrice").val(""); 		
 	});
 
@@ -42,16 +42,14 @@ var onPageLoad  = function(){
 		var request = $.ajax({url:"/addToAuction/:"+itemId,type:"POST", dataType: "json",
 			data:{email:email,password:password,itemId:itemId}
 		});
-
-		request.done(function(message){
+		request.success(function(message){
 			alert(message.message);
-			$("#message").html(message.message);
 			return false;
-		});
-
-		request.fail(function(message){
+		})
+		request.error(function(message){
+			alert(message.message);
 			return false;
-		});
+		})
 	});
 	$("#running").click(updateItemStatus);
 	$("#putPrice").click(insertPrice);

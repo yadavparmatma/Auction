@@ -1,8 +1,6 @@
 extends layout
 block vars
  - var title = "Admin-Login"
-
-
 block content
  a(href="/") Home 
  center
@@ -11,8 +9,6 @@ block content
  center
   br
   h2 Login to your account
-  if error
-   p ERROR: #{error}
   form(action="/adminLogin" method="POST")
    span 
     |UserName:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -25,3 +21,7 @@ block content
    br
    br
    input(type="submit" value="Login")
+  br
+  br
+  if error
+   label(class="error") ERROR: #{error}

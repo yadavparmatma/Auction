@@ -42,7 +42,8 @@ html
         th Auction Date
         th Status
       tr
-      each topic in topics
+      if topics  
+       each topic in topics
         tr
           td 
            a(href='/itemDescription/#{topic.id}') #{topic.name}

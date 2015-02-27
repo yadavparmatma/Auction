@@ -80,7 +80,7 @@ router.post('/userRegistration',function(req,res){
 	var userInfo = req.body;
 	userInfo.password = bcrypt.hashSync(userInfo.password);
 	var callback = function(error){
-		error && res.render('/', {error:"User already present.."});
+		error && res.render('userRegistration', {error:"User already present.."});
 		!error && res.redirect('/userLogin');
 	};
 	auction.insertUsers(userInfo,callback);
@@ -155,8 +155,7 @@ router.post("/addToAuction/:itemId",function(req,res){
 		}
 		else{ 
 			auction.addAuctionId(detail,function(er){
-				if(!er)
-					res.json({message:"You are Reegistered SuccessFully"});
+				res.json({message:"You are Reegistered SuccessFully"});
 			})
 		}
 	});
@@ -169,12 +168,11 @@ router.get('/userDashboard/:id',requireLoginForUser,function(req,res){
 	items.userName = req.session.name;
 	auction.getTopicsNameAndDate(function(err, topics){
   		items.topics = topics;
+  		auction.getJoinedAuctions(id,function(err,joinedAuctionsDetails){
+			items.itemsDetails = joinedAuctionsDetails;
+			res.render('userDashboard',items);
+		})	
   	});
-
-	auction.getJoinedAuctions(id,function(err,joinedAuctionsDetails){
-		items.itemsDetails = joinedAuctionsDetails;
-		res.render('userDashboard',items);
-	})	
 })
 
 

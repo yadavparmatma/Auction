@@ -25,5 +25,8 @@ block content
           td #{topic.description}
           td
            form(action="/startAuction/#{topic.id}")
-            input(type="submit" value="Start Auction")
+            if topic.status == "open" 
+             input(type="submit" value="Start Auction")
+            else
+             input(type="submit" value="View Auction")
 
