@@ -1,20 +1,39 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Fix circle.yml
 version: 2
 jobs:
+<<<<<<< HEAD
+=======
   build:
     steps:
       - checkout
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: install-npm-wee
           command: npm start
-      - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths:
-            - .node_modules
+>>>>>>> Added build job to config.yml
   test:
     steps:
-    - checkout
+<<<<<<< HEAD
       run:
         name: test
         command: npm test
+<<<<<<< HEAD
+=======
+test:
+<<<<<<< HEAD
+	post:
+		-npm test
+>>>>>>> fix test script
+=======
+  post:
+    -npm test
+>>>>>>> fix test script
+=======
+>>>>>>> Fix circle.yml
+=======
+      - run:
+          name: test
+          command: npm test
+>>>>>>> Added build job to config.yml

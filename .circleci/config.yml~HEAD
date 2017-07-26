@@ -1,0 +1,12 @@
+version: 2
+jobs:
+  build:
+    steps:
+      - run:
+          name: install-npm-wee
+          command: npm start
+  test:
+    steps:
+      - run:
+          name: test
+          command: npm test
