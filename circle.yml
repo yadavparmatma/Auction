@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Fix circle.yml
 version: 2
 jobs:
   test:
@@ -7,6 +10,7 @@ jobs:
       run:
         name: test
         command: npm test
+<<<<<<< HEAD
 =======
 test:
 <<<<<<< HEAD
@@ -17,3 +21,5 @@ test:
   post:
     -npm test
 >>>>>>> fix test script
+=======
+>>>>>>> Fix circle.yml
