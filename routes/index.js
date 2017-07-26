@@ -18,7 +18,7 @@ var loadUserFromSession = function(req,res,next){
 			delete req.session.user_name;
 		}
 	});
-	next();		
+	next();
 };
 
 var requireLogin = function(req,res,next){
@@ -35,7 +35,7 @@ router.get('/', function(req, res) {
 	auction.getTopicsNameAndDate(function(err, topics){
   		res.render('index', {
   		  topics: topics
-  		}); 
+  		});
   	});
 });
 
@@ -55,11 +55,11 @@ router.get('/userLogout',function(req,res){
 router.post('/userLogin',function(req,res){
 	var userInfo = req.body;
 	var callback = function(error,data){
-		if(((data===undefined) || error || 
+		if(((data===undefined) || error ||
 			(!bcrypt.compareSync(userInfo.password,data.password)))){
 		 	res.render('userLogin', {error:"Invalid Username or Password.."});
 		};
-		if(!error && (data!==undefined) && 
+		if(!error && (data!==undefined) &&
 			bcrypt.compareSync(userInfo.password,data.password)){
 			req.session.userEmail = userInfo.email_id;
 			req.session.user_id = data.id;
@@ -121,7 +121,7 @@ router.post('/adminLogin',function(req,res){
 
 router.get('/itemDescription/:id', function(req, res) {
 	auction.getItemsAllDetail(req.params.id,function(err, allDetail){
-  		res.render('itemDescription', {allDetail: allDetail}); 
+  		res.render('itemDescription', {allDetail: allDetail});
   	});
 });
 
@@ -148,12 +148,12 @@ router.get("/addToAuction/:itemId",function(req,res){
 })
 
 router.post("/addToAuction/:itemId",function(req,res){
-	var detail = req.body;		
+	var detail = req.body;
 	auction.getUserPassword(detail.email,function(err,status){
 		if(((status==undefined) || err || (!bcrypt.compareSync(detail.password,status.password)))){
 		 	res.json({message:"Invalid User Id or Password"});
 		}
-		else{ 
+		else{
 			auction.addAuctionId(detail,function(er){
 				res.json({message:"You are Reegistered SuccessFully"});
 			})
@@ -171,7 +171,7 @@ router.get('/userDashboard/:id',requireLoginForUser,function(req,res){
   		auction.getJoinedAuctions(id,function(err,joinedAuctionsDetails){
 			items.itemsDetails = joinedAuctionsDetails;
 			res.render('userDashboard',items);
-		})	
+		})
   	});
 })
 
@@ -179,7 +179,7 @@ router.get('/userDashboard/:id',requireLoginForUser,function(req,res){
 router.get("/startAuction/:itemId",function(req,res){
 	auction.updateStatus(req.params.itemId,function(error){
 		auction.getItemsAllDetail(req.params.itemId,function(err, itemDetail){
-  			res.render('startAuction', {itemDetail: itemDetail}); 
+  			res.render('startAuction', {itemDetail: itemDetail});
 		})
   	});
 });
