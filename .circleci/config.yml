@@ -15,6 +15,7 @@ jobs:
 >>>>>>> Added build job to config.yml
   test:
     steps:
+<<<<<<< HEAD
       run:
         name: test
         command: npm test
@@ -31,3 +32,8 @@ test:
 >>>>>>> fix test script
 =======
 >>>>>>> Fix circle.yml
+=======
+      - run:
+          name: test
+          command: npm test
+>>>>>>> Added build job to config.yml
