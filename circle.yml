@@ -9,6 +9,11 @@ jobs:
         command: npm test
 =======
 test:
+<<<<<<< HEAD
 	post:
 		-npm test
+>>>>>>> fix test script
+=======
+  post:
+    -npm test
 >>>>>>> fix test script
