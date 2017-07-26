@@ -4,9 +4,17 @@
 >>>>>>> Fix circle.yml
 version: 2
 jobs:
+<<<<<<< HEAD
+=======
+  build:
+    steps:
+      - checkout
+      - run:
+          name: install-npm-wee
+          command: npm start
+>>>>>>> Added build job to config.yml
   test:
     steps:
-    - checkout
       run:
         name: test
         command: npm test
