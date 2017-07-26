@@ -1,39 +1,13 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Fix circle.yml
 version: 2
 jobs:
-<<<<<<< HEAD
-=======
   build:
     steps:
-      - checkout
-      - run:
+       - checkout
+       - run:
           name: install-npm-wee
           command: npm start
->>>>>>> Added build job to config.yml
   test:
     steps:
-<<<<<<< HEAD
-      run:
-        name: test
-        command: npm test
-<<<<<<< HEAD
-=======
-test:
-<<<<<<< HEAD
-	post:
-		-npm test
->>>>>>> fix test script
-=======
-  post:
-    -npm test
->>>>>>> fix test script
-=======
->>>>>>> Fix circle.yml
-=======
       - run:
           name: test
           command: npm test
->>>>>>> Added build job to config.yml
