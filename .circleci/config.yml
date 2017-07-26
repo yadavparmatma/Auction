@@ -8,6 +8,6 @@ jobs:
           command: npm start
   test:
     steps:
-      run:
-        name: test
-        command: npm test
+      - run:
+         name: test
+         command: npm test
