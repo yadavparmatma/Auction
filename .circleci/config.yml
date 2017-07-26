@@ -2,8 +2,8 @@ version: 2
 jobs:
   build:
     steps:
-       - checkout
-       - run:
+      - checkout
+      - run:
           name: install-npm-wee
           command: npm start
   test:
